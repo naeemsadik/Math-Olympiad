@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, Bell, ChevronDown, LayoutDashboard, LogOut, User, Lock } from "lucide-react";
+import { Bell, ChevronDown, LayoutDashboard, LogOut, User, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 import { useRef, useState, useEffect } from "react";
@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Live Exam", href: "/live-exam", protected: true },
   { label: "Olympiads", href: "/events", protected: false },
   { label: "Hall of Fame", href: "/hall-of-fame", protected: false },
-  { label: "Resources", href: "/resources", protected: false },
+  { label: "Gallery", href: "/gallery", protected: false },
   { label: "About", href: "/about", protected: false },
 ];
 
@@ -91,16 +91,7 @@ export default function Navbar() {
 
         {/* Right side */}
         <div className="ml-auto flex items-center gap-3">
-          {/* Search */}
-          <div className="hidden lg:flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-lg px-3 py-2 w-48">
-            <Search size={14} className="text-slate-400" />
-            <input
-              placeholder="Search resources..."
-              className="bg-transparent text-sm text-slate-600 placeholder-slate-400 outline-none w-full"
-            />
-          </div>
-
-          {authUser && (
+{authUser && (
             <button className="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors text-slate-500 hover:text-slate-700">
               <Bell size={16} />
             </button>

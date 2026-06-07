@@ -45,8 +45,8 @@ export default function EventsPage() {
       <div
         className="rounded-2xl p-8 relative overflow-hidden"
         style={{
-          background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)",
-          boxShadow: "0 8px 32px rgba(15,23,42,0.2), 0 2px 8px rgba(15,23,42,0.12)",
+          background: "linear-gradient(135deg, #d97706 0%, #b45309 100%)",
+          boxShadow: "0 8px 32px rgba(217,119,6,0.25)",
         }}
       >
         <div className="absolute inset-0 pointer-events-none">
@@ -68,7 +68,7 @@ export default function EventsPage() {
           <h2 className="font-heading text-4xl font-extrabold text-white leading-tight">
             Compete at the
             <br />
-            <span className="text-yellow-300">Highest Level.</span>
+            <span className="text-amber-100">Highest Level.</span>
           </h2>
           <p className="text-white/60 text-sm mt-3 max-w-lg">
             Join international math competitions and internal UIU mock tests. Navigate the
@@ -198,7 +198,7 @@ export default function EventsPage() {
             <div className="relative">
               <h3 className="font-heading font-bold text-slate-900 mb-1">Resource Library</h3>
               <p className="text-xs text-slate-400 leading-relaxed">Master Euclidean geometry and Combinatorics. Curated books and practice problems.</p>
-              <button className="mt-3 text-xs font-semibold text-[#d97706] hover:text-[#6d28d9] transition-colors flex items-center gap-1">
+              <button className="mt-3 text-xs font-semibold text-[#d97706] hover:text-[#b45309] transition-colors flex items-center gap-1">
                 Explore Assets →
               </button>
             </div>

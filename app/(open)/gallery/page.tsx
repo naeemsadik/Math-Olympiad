@@ -1,4 +1,7 @@
-import { Images, Calendar, Trophy, Users, GraduationCap } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Images, Calendar, Trophy, GraduationCap, BookOpen, Star, Mic, Camera } from "lucide-react";
 
 const albums = [
   {
@@ -12,6 +15,26 @@ const albums = [
     desc: "Grand finale of the annual UIU Internal Math Olympiad with prize-giving ceremony.",
   },
   {
+    title: "Award Ceremony & Medal Night 2024",
+    date: "July 2024",
+    photos: 31,
+    category: "Competition",
+    color: "#d97706",
+    icon: Star,
+    coverGradient: "from-yellow-500 to-amber-600",
+    desc: "Annual award night honouring top performers across all tiers with medals and certificates.",
+  },
+  {
+    title: "Inter-School Math Fest 2024",
+    date: "March 2024",
+    photos: 19,
+    category: "Competition",
+    color: "#d97706",
+    icon: Trophy,
+    coverGradient: "from-orange-400 to-amber-500",
+    desc: "UIU-hosted inter-school competition drawing participants from 12 schools across Dhaka.",
+  },
+  {
     title: "BdMO Pre-Training Camp 2024",
     date: "January 2024",
     photos: 18,
@@ -22,14 +45,74 @@ const albums = [
     desc: "5-day intensive camp preparing students for the BdMO regional round.",
   },
   {
+    title: "UIU Math Club Orientation 2024",
+    date: "February 2024",
+    photos: 14,
+    category: "Training",
+    color: "#f59e0b",
+    icon: GraduationCap,
+    coverGradient: "from-amber-300 to-yellow-500",
+    desc: "Welcome session for new members covering club activities, goals, and training roadmap.",
+  },
+  {
+    title: "Problem-Solving Bootcamp 2023",
+    date: "November 2023",
+    photos: 22,
+    category: "Training",
+    color: "#f59e0b",
+    icon: BookOpen,
+    coverGradient: "from-yellow-500 to-orange-500",
+    desc: "Intensive 3-day bootcamp focusing on combinatorics and number theory for advanced students.",
+  },
+  {
+    title: "Olympiad Geometry Workshop",
+    date: "October 2023",
+    photos: 16,
+    category: "Workshop",
+    color: "#b45309",
+    icon: BookOpen,
+    coverGradient: "from-orange-500 to-amber-700",
+    desc: "Hands-on workshop on synthetic geometry, angle chasing, and circle theorems.",
+  },
+  {
+    title: "Weekly Problem Sessions — 2023",
+    date: "2023",
+    photos: 20,
+    category: "Workshop",
+    color: "#b45309",
+    icon: Calendar,
+    coverGradient: "from-emerald-500 to-teal-600",
+    desc: "Highlights from Thursday evening problem-solving sessions throughout the year.",
+  },
+  {
+    title: "Combinatorics & Graph Theory Workshop",
+    date: "August 2023",
+    photos: 11,
+    category: "Workshop",
+    color: "#b45309",
+    icon: BookOpen,
+    coverGradient: "from-teal-500 to-emerald-600",
+    desc: "Focused workshop on counting techniques and graph problems for olympiad prep.",
+  },
+  {
     title: "Guest Lecture: Dr. Rahman on NT",
     date: "September 2023",
     photos: 12,
     category: "Seminar",
-    color: "#b45309",
-    icon: Users,
-    coverGradient: "from-orange-500 to-amber-700",
+    color: "#0891b2",
+    icon: Mic,
+    coverGradient: "from-sky-500 to-cyan-600",
     desc: "Seminar on Advanced Number Theory techniques by Dr. Aminur Rahman, BdMO alumnus.",
+  },
+  {
+    title: "BdMO Preparation Seminar 2024",
+    date: "December 2023",
+    photos: 9,
+    category: "Seminar",
+    color: "#0891b2",
+    icon: Mic,
+    coverGradient: "from-cyan-500 to-sky-600",
+    desc: "Panel discussion with national medalists sharing tips and strategies for BdMO success.",
   },
   {
     title: "UIU Olympiad 2023 — All Rounds",
@@ -42,30 +125,34 @@ const albums = [
     desc: "Full photo coverage of the 2023 olympiad from preliminary to award ceremony.",
   },
   {
-    title: "Weekly Problem Sessions — 2023",
-    date: "2023",
-    photos: 20,
-    category: "Workshop",
-    color: "#059669",
-    icon: Calendar,
-    coverGradient: "from-emerald-500 to-teal-600",
-    desc: "Highlights from Thursday evening problem-solving sessions throughout the year.",
-  },
-  {
     title: "Inter-University Challenge 2023",
     date: "March 2023",
     photos: 15,
     category: "Competition",
-    color: "#0891b2",
+    color: "#d97706",
     icon: Trophy,
-    coverGradient: "from-cyan-500 to-sky-600",
+    coverGradient: "from-violet-500 to-purple-600",
     desc: "UIU vs BUET vs IUT team math challenge — collaborative and competitive.",
+  },
+  {
+    title: "Algebra & Inequalities Workshop",
+    date: "May 2023",
+    photos: 13,
+    category: "Workshop",
+    color: "#b45309",
+    icon: BookOpen,
+    coverGradient: "from-rose-500 to-pink-600",
+    desc: "Deep dive into algebraic manipulation and classic inequality techniques.",
   },
 ];
 
 const categories = ["All", "Competition", "Training", "Workshop", "Seminar"];
 
 export default function GalleryPage() {
+  const [selected, setSelected] = useState("All");
+
+  const filtered = selected === "All" ? albums : albums.filter((a) => a.category === selected);
+
   return (
     <div>
 
@@ -98,13 +185,17 @@ export default function GalleryPage() {
             {categories.map((cat) => (
               <button
                 key={cat}
+                onClick={() => setSelected(cat)}
                 className={`text-sm font-medium px-4 py-1.5 rounded-full border transition-all ${
-                  cat === "All"
+                  selected === cat
                     ? "gradient-orange text-white border-transparent glow-orange"
                     : "bg-white text-slate-600 border-slate-200 hover:border-[#d97706]/30 hover:text-[#d97706]"
                 }`}
               >
                 {cat}
+                <span className="ml-1.5 text-xs opacity-70">
+                  ({cat === "All" ? albums.length : albums.filter((a) => a.category === cat).length})
+                </span>
               </button>
             ))}
           </div>
@@ -113,7 +204,7 @@ export default function GalleryPage() {
         {/* Albums grid */}
         <section className="max-w-screen-xl mx-auto px-6 py-8 pb-16">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {albums.map(({ title, date, photos, category, color, icon: Icon, coverGradient, desc }) => (
+            {filtered.map(({ title, date, photos, category, color, icon: Icon, coverGradient, desc }) => (
               <div
                 key={title}
                 className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer group"
@@ -128,8 +219,8 @@ export default function GalleryPage() {
                   >
                     {category}
                   </span>
-                  <span className="absolute bottom-3 left-3 text-xs font-semibold text-white/80 bg-black/20 px-2 py-0.5 rounded-full backdrop-blur-sm">
-                    {photos} photos
+                  <span className="absolute bottom-3 left-3 text-xs font-semibold text-white/80 bg-black/20 px-2 py-0.5 rounded-full backdrop-blur-sm flex items-center gap-1">
+                    <Camera size={10} /> {photos} photos
                   </span>
                 </div>
 
