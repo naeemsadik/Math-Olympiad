@@ -34,18 +34,19 @@ export default function TopicsPage() {
       {/* Hero banner */}
       <div
         className="rounded-2xl p-8 relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%)", boxShadow: "0 8px 32px rgba(15,23,42,0.2)" }}
+        style={{ background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)", boxShadow: "0 8px 32px rgba(217,119,6,0.3), 0 2px 8px rgba(217,119,6,0.2)" }}
       >
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#d97706]/20 rounded-full blur-3xl" />
-          <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#fcd34d]/15 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#d97706]/20 rounded-full blur-2xl" />
+          <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
         </div>
         <div className="relative">
-          <p className="text-xs text-white/50 uppercase tracking-widest mb-3 font-semibold">Academic Syllabus 2024</p>
+          <p className="text-xs text-amber-200/60 uppercase tracking-widest mb-3 font-semibold">Academic Syllabus 2024</p>
           <h1 className="font-heading text-4xl font-extrabold text-white leading-tight">
-            Master the <span className="text-yellow-300">Foundations</span>
+            Master the <span className="text-amber-300">Foundations</span>
           </h1>
-          <p className="text-white/60 mt-3 max-w-lg text-sm leading-relaxed">
+          <p className="text-amber-100/60 mt-3 max-w-lg text-sm leading-relaxed">
             Explore the core pillars of competitive mathematics. Our curated syllabus is designed to
             take you from fundamental principles to world-class problem-solving techniques.
           </p>
@@ -53,11 +54,11 @@ export default function TopicsPage() {
             <div className="mt-4 flex items-center gap-2">
               <span
                 className="text-xs font-bold px-3 py-1 rounded-full"
-                style={{ color: tierColors[user.tier], backgroundColor: `${tierColors[user.tier]}25`, border: `1px solid ${tierColors[user.tier]}40` }}
+                style={{ color: tierColors[user.tier], backgroundColor: `${tierColors[user.tier]}30`, border: `1px solid ${tierColors[user.tier]}50` }}
               >
                 {user.tier} Topics
               </span>
-              <span className="text-xs text-white/50">Showing content for your level</span>
+              <span className="text-xs text-amber-200/50">Showing content for your level</span>
             </div>
           )}
         </div>

@@ -29,7 +29,7 @@ const studentLinks = [
   { icon: Sigma, label: "Topics", href: "/topics" },
   { icon: Dumbbell, label: "Training", href: "/training" },
   { icon: Users, label: "Community", href: "/community" },
-  { icon: Bell, label: "Notices", href: "/notices" },
+  { icon: Bell, label: "Announcements", href: "/notices" },
 ];
 
 const adminLinks = [
@@ -44,7 +44,7 @@ const adminLinks = [
   { icon: ClipboardList, label: "Registration", href: "/admin/registration" },
   { icon: Trophy, label: "Hall of Fame", href: "/admin/hall-of-fame" },
   { icon: Images, label: "Gallery", href: "/admin/gallery" },
-  { icon: Bell, label: "Notices", href: "/admin/notices" },
+  { icon: Bell, label: "Announcements", href: "/admin/notices" },
 ];
 
 export default function Sidebar() {
