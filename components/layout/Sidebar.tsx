@@ -13,9 +13,7 @@ import {
   MessageSquare,
   Radio,
   Bell,
-  Trophy,
   Dumbbell,
-  Images,
   ClipboardList,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -29,6 +27,7 @@ const studentLinks = [
   { icon: Sigma, label: "Topics", href: "/topics" },
   { icon: Dumbbell, label: "Training", href: "/training" },
   { icon: Users, label: "Community", href: "/community" },
+  { icon: ClipboardList, label: "Registration", href: "/registration" },
   { icon: Bell, label: "Announcements", href: "/notices" },
 ];
 
@@ -42,8 +41,6 @@ const adminLinks = [
   { icon: MessageSquare, label: "Community", href: "/admin/community" },
   { icon: Shield, label: "Events", href: "/admin/events" },
   { icon: ClipboardList, label: "Registration", href: "/admin/registration" },
-  { icon: Trophy, label: "Hall of Fame", href: "/admin/hall-of-fame" },
-  { icon: Images, label: "Gallery", href: "/admin/gallery" },
   { icon: Bell, label: "Announcements", href: "/admin/notices" },
 ];
 

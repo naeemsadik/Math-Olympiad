@@ -79,10 +79,10 @@ export default function AdminCommunityPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="font-heading text-3xl font-bold text-white flex items-center gap-2">
-            <MessageSquare size={24} className="text-[#a78bfa]" /> Community
+          <h1 className="font-heading text-3xl font-bold text-slate-900 flex items-center gap-2">
+            <MessageSquare size={24} className="text-[#d97706]" /> Community
           </h1>
-          <p className="text-[#94a3b8] text-sm mt-1">Moderate discussions, pin announcements, and manage posts.</p>
+          <p className="text-slate-500 text-sm mt-1">Moderate discussions, pin announcements, and manage posts.</p>
         </div>
         <button onClick={openCreate} className="flex items-center gap-2 gradient-orange glow-orange text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:scale-105 transition-all">
           <Plus size={16} /> New Post
@@ -92,14 +92,14 @@ export default function AdminCommunityPage() {
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative">
-          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748b]" />
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search posts..."
-            className="bg-white/[0.06] border border-white/[0.08] rounded-xl pl-9 pr-4 py-2 text-sm text-[#94a3b8] placeholder-[#475569] outline-none focus:border-[#d97706]/50 w-52 transition-all" />
+            className="bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-sm text-slate-500 placeholder-slate-400 outline-none focus:border-[#d97706]/50 w-52 transition-all" />
         </div>
         <div className="flex gap-2 flex-wrap">
           {["All", ...categories].map((c) => (
             <button key={c} onClick={() => setFilterCat(c)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${filterCat === c ? "gradient-orange text-white" : "bg-white/[0.06] text-[#94a3b8] hover:text-white hover:bg-white/[0.1]"}`}>
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${filterCat === c ? "gradient-orange text-white" : "bg-slate-50 text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`}>
               {c}
             </button>
           ))}
@@ -110,58 +110,58 @@ export default function AdminCommunityPage() {
       {showForm && (
         <div className="glass rounded-2xl p-6 border border-[#d97706]/30 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-heading font-semibold text-white">{editId ? "Edit Post" : "New Post"}</h3>
-            <button onClick={() => setShowForm(false)} className="text-[#64748b] hover:text-white"><X size={18} /></button>
+            <h3 className="font-heading font-semibold text-slate-900">{editId ? "Edit Post" : "New Post"}</h3>
+            <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-slate-900"><X size={18} /></button>
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Title</label>
+            <label className="text-xs text-slate-500 uppercase tracking-wider">Title</label>
             <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
-              placeholder="Post title..." className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+              placeholder="Post title..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Body</label>
+            <label className="text-xs text-slate-500 uppercase tracking-wider">Body</label>
             <textarea value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })}
               rows={3} placeholder="Post content..."
-              className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all resize-none" />
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all resize-none" />
           </div>
 
           <div className="grid sm:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Category</label>
+              <label className="text-xs text-slate-500 uppercase tracking-wider">Category</label>
               <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-                className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50">
-                {categories.map((c) => <option key={c} value={c} className="bg-[#0f0f1a]">{c}</option>)}
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50">
+                {categories.map((c) => <option key={c} value={c} >{c}</option>)}
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Author Name</label>
+              <label className="text-xs text-slate-500 uppercase tracking-wider">Author Name</label>
               <input value={form.author} onChange={(e) => setForm({ ...form, author: e.target.value })}
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Department</label>
+              <label className="text-xs text-slate-500 uppercase tracking-wider">Department</label>
               <input value={form.authorDept} onChange={(e) => setForm({ ...form, authorDept: e.target.value })}
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
             </div>
           </div>
 
           {/* Tags */}
           <div className="space-y-1.5">
-            <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Tags</label>
+            <label className="text-xs text-slate-500 uppercase tracking-wider">Tags</label>
             <div className="flex gap-2">
               <input value={tagInput} onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addTag())}
-                placeholder="Add tag and press Enter..." className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
-              <button type="button" onClick={addTag} className="px-4 py-2.5 bg-white/[0.06] border border-white/[0.08] rounded-xl text-sm text-[#94a3b8] hover:text-white transition-colors">Add</button>
+                placeholder="Add tag and press Enter..." className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
+              <button type="button" onClick={addTag} className="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-500 hover:text-slate-900 transition-colors">Add</button>
             </div>
             {form.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {form.tags.map((tag) => (
-                  <span key={tag} className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-[#d97706]/15 text-[#a78bfa] border border-[#d97706]/20">
+                  <span key={tag} className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-[#d97706]/15 text-[#d97706] border border-[#d97706]/20">
                     #{tag}
-                    <button onClick={() => removeTag(tag)} className="text-[#64748b] hover:text-white"><X size={11} /></button>
+                    <button onClick={() => removeTag(tag)} className="text-slate-400 hover:text-slate-900"><X size={11} /></button>
                   </span>
                 ))}
               </div>
@@ -171,10 +171,10 @@ export default function AdminCommunityPage() {
           <div className="flex items-center gap-3 justify-between">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={form.pinned} onChange={(e) => setForm({ ...form, pinned: e.target.checked })} className="w-4 h-4 accent-[#d97706]" />
-              <span className="text-sm text-[#94a3b8]">Pin this post to top</span>
+              <span className="text-sm text-slate-500">Pin this post to top</span>
             </label>
             <div className="flex gap-3">
-              <button onClick={() => setShowForm(false)} className="px-5 py-2 rounded-xl text-sm text-[#94a3b8] hover:text-white transition-colors">Cancel</button>
+              <button onClick={() => setShowForm(false)} className="px-5 py-2 rounded-xl text-sm text-slate-500 hover:text-slate-900 transition-colors">Cancel</button>
               <button onClick={save} disabled={!form.title.trim()}
                 className="flex items-center gap-2 gradient-orange text-white text-sm font-semibold px-5 py-2 rounded-xl hover:scale-105 transition-all disabled:opacity-50 disabled:scale-100">
                 <Check size={15} /> {editId ? "Save Changes" : "Publish Post"}
@@ -187,9 +187,9 @@ export default function AdminCommunityPage() {
       {/* Delete confirm */}
       {deleteId && (
         <div className="glass rounded-2xl p-5 border border-red-500/30 flex items-center justify-between gap-4">
-          <p className="text-sm text-white">Delete <span className="text-red-400 font-semibold">&ldquo;{posts.find(p => p.id === deleteId)?.title}&rdquo;</span>?</p>
+          <p className="text-sm text-slate-900">Delete <span className="text-red-400 font-semibold">&ldquo;{posts.find(p => p.id === deleteId)?.title}&rdquo;</span>?</p>
           <div className="flex gap-2 shrink-0">
-            <button onClick={() => setDeleteId(null)} className="px-4 py-1.5 rounded-lg text-sm text-[#94a3b8] hover:text-white transition-colors">Cancel</button>
+            <button onClick={() => setDeleteId(null)} className="px-4 py-1.5 rounded-lg text-sm text-slate-500 hover:text-slate-900 transition-colors">Cancel</button>
             <button onClick={doDelete} className="px-4 py-1.5 rounded-lg text-sm bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors font-medium">Delete</button>
           </div>
         </div>
@@ -203,11 +203,11 @@ export default function AdminCommunityPage() {
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 {p.pinned && <span className="text-xs font-semibold text-[#f59e0b] flex items-center gap-1"><Pin size={11} /> Pinned</span>}
                 <span className="text-xs font-medium px-2.5 py-0.5 rounded-full" style={{ backgroundColor: `${categoryColors[p.category] ?? "#94a3b8"}18`, color: categoryColors[p.category] ?? "#94a3b8" }}>{p.category}</span>
-                <span className="text-xs text-[#475569]">{p.author} · {p.authorDept} · {p.time}</span>
+                <span className="text-xs text-slate-400">{p.author} · {p.authorDept} · {p.time}</span>
               </div>
-              <p className="font-heading font-semibold text-white text-sm mb-1">{p.title}</p>
-              <p className="text-xs text-[#64748b] line-clamp-2 leading-relaxed">{p.body}</p>
-              <div className="flex gap-4 mt-2 text-xs text-[#475569]">
+              <p className="font-heading font-semibold text-slate-900 text-sm mb-1">{p.title}</p>
+              <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{p.body}</p>
+              <div className="flex gap-4 mt-2 text-xs text-slate-400">
                 <span>👍 {p.likes}</span>
                 <span>💬 {p.replies} replies</span>
                 <span>👁 {p.views} views</span>
@@ -216,18 +216,18 @@ export default function AdminCommunityPage() {
             </div>
             <div className="flex items-center gap-1.5 shrink-0">
               <button onClick={() => togglePin(p.id)} title={p.pinned ? "Unpin" : "Pin"}
-                className={`p-2 rounded-lg transition-colors ${p.pinned ? "text-[#f59e0b] hover:bg-[#f59e0b]/10" : "text-[#64748b] hover:text-[#f59e0b] hover:bg-[#f59e0b]/10"}`}>
+                className={`p-2 rounded-lg transition-colors ${p.pinned ? "text-[#f59e0b] hover:bg-[#f59e0b]/10" : "text-slate-400 hover:text-[#f59e0b] hover:bg-[#f59e0b]/10"}`}>
                 {p.pinned ? <PinOff size={15} /> : <Pin size={15} />}
               </button>
-              <button onClick={() => openEdit(p)} className="p-2 rounded-lg text-[#64748b] hover:text-[#a78bfa] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
-              <button onClick={() => setDeleteId(p.id)} className="p-2 rounded-lg text-[#64748b] hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
+              <button onClick={() => openEdit(p)} className="p-2 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
+              <button onClick={() => setDeleteId(p.id)} className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
             </div>
           </div>
         ))}
-        {filtered.length === 0 && <p className="text-center text-[#64748b] text-sm py-10">No posts found.</p>}
+        {filtered.length === 0 && <p className="text-center text-slate-400 text-sm py-10">No posts found.</p>}
       </div>
 
-      <p className="text-xs text-[#475569] text-center">{filtered.length} of {posts.length} posts</p>
+      <p className="text-xs text-slate-400 text-center">{filtered.length} of {posts.length} posts</p>
     </div>
   );
 }

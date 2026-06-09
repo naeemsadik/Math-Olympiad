@@ -117,10 +117,10 @@ export default function AdminEventsPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="font-heading text-3xl font-bold text-white flex items-center gap-2">
-            <Shield size={24} className="text-[#a78bfa]" /> Events Management
+          <h1 className="font-heading text-3xl font-bold text-slate-900 flex items-center gap-2">
+            <Shield size={24} className="text-[#d97706]" /> Events Management
           </h1>
-          <p className="text-[#94a3b8] text-sm mt-1">Create, edit and manage olympiad events, internal sessions, and live exams.</p>
+          <p className="text-slate-500 text-sm mt-1">Create, edit and manage olympiad events, internal sessions, and live exams.</p>
         </div>
         <button onClick={onCreate}
           className="flex items-center gap-2 gradient-orange glow-orange text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:scale-105 transition-all">
@@ -133,15 +133,15 @@ export default function AdminEventsPage() {
         <div className="flex gap-2">
           {([["olympiad", "Olympiad Events"], ["internal", "Internal Sessions"], ["live-exam", "Live Exams"]] as [Tab, string][]).map(([t, label]) => (
             <button key={t} onClick={() => { setTab(t); setShowForm(false); }}
-              className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${tab === t ? "gradient-orange text-white" : "bg-white/[0.06] text-[#94a3b8] hover:text-white hover:bg-white/[0.1]"}`}>
+              className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${tab === t ? "gradient-orange text-white" : "bg-slate-50 text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`}>
               {label}
             </button>
           ))}
         </div>
         <div className="relative ml-auto">
-          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748b]" />
+          <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search events..."
-            className="bg-white/[0.06] border border-white/[0.08] rounded-xl pl-9 pr-4 py-2 text-sm text-[#94a3b8] placeholder-[#475569] outline-none focus:border-[#d97706]/50 w-52 transition-all" />
+            className="bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-sm text-slate-500 placeholder-slate-400 outline-none focus:border-[#d97706]/50 w-52 transition-all" />
         </div>
       </div>
 
@@ -149,61 +149,61 @@ export default function AdminEventsPage() {
       {showForm && (
         <div className="glass rounded-2xl p-6 border border-[#d97706]/30 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-heading font-semibold text-white">
+            <h3 className="font-heading font-semibold text-slate-900">
               {editId ? "Edit" : "New"} {tab === "olympiad" ? "Olympiad Event" : tab === "internal" ? "Internal Session" : "Live Exam"}
             </h3>
-            <button onClick={() => setShowForm(false)} className="text-[#64748b] hover:text-white"><X size={18} /></button>
+            <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-slate-900"><X size={18} /></button>
           </div>
 
           {tab === "olympiad" && (
             <>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Title *</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Title *</label>
                   <input value={evForm.title} onChange={(e) => setEvForm({ ...evForm, title: e.target.value })}
                     placeholder="e.g. International Mathematical Olympiad"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Type</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Type</label>
                   <select value={evForm.type} onChange={(e) => setEvForm({ ...evForm, type: e.target.value as OlympiadType })}
-                    className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50">
-                    {olympiadTypes.map((t) => <option key={t} value={t} className="bg-[#0f0f1a]">{t}</option>)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50">
+                    {olympiadTypes.map((t) => <option key={t} value={t} >{t}</option>)}
                   </select>
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Date</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Date</label>
                   <input value={evForm.date} onChange={(e) => setEvForm({ ...evForm, date: e.target.value })}
                     placeholder="e.g. July 11-22, 2024"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Location</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Location</label>
                   <input value={evForm.location} onChange={(e) => setEvForm({ ...evForm, location: e.target.value })}
                     placeholder="e.g. United Kingdom"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Description</label>
+                <label className="text-xs text-slate-500 uppercase tracking-wider">Description</label>
                 <textarea value={evForm.description} onChange={(e) => setEvForm({ ...evForm, description: e.target.value })}
                   rows={2} placeholder="Brief description..."
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all resize-none" />
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all resize-none" />
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Official Link</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Official Link</label>
                   <input value={evForm.officialLink ?? ""} onChange={(e) => setEvForm({ ...evForm, officialLink: e.target.value })}
                     placeholder="https://..."
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Registration Link</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Registration Link</label>
                   <input value={evForm.registrationLink ?? ""} onChange={(e) => setEvForm({ ...evForm, registrationLink: e.target.value })}
                     placeholder="https://..."
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
               </div>
             </>
@@ -213,43 +213,43 @@ export default function AdminEventsPage() {
             <>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Title *</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Title *</label>
                   <input value={intForm.title} onChange={(e) => setIntForm({ ...intForm, title: e.target.value })}
                     placeholder="e.g. UIU Grand Mock 05"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Subtitle</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Subtitle</label>
                   <input value={intForm.subtitle} onChange={(e) => setIntForm({ ...intForm, subtitle: e.target.value })}
                     placeholder="e.g. Topic: Combinatorics"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Date</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Date</label>
                   <input value={intForm.date} onChange={(e) => setIntForm({ ...intForm, date: e.target.value })}
                     placeholder="e.g. Sat, 21 Oct"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Time</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Time</label>
                   <input value={intForm.time} onChange={(e) => setIntForm({ ...intForm, time: e.target.value })}
                     placeholder="e.g. 3:00 PM"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Type</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Type</label>
                   <select value={intForm.type} onChange={(e) => setIntForm({ ...intForm, type: e.target.value })}
-                    className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50">
-                    {internalTypes.map((t) => <option key={t} value={t} className="bg-[#0f0f1a]">{t}</option>)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50">
+                    {internalTypes.map((t) => <option key={t} value={t} >{t}</option>)}
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Color</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Color</label>
                   <select value={intForm.typeColor} onChange={(e) => setIntForm({ ...intForm, typeColor: e.target.value })}
-                    className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50">
-                    {internalColorOptions.map((c) => <option key={c} value={c} className="bg-[#0f0f1a]">{c}</option>)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50">
+                    {internalColorOptions.map((c) => <option key={c} value={c} >{c}</option>)}
                   </select>
                 </div>
               </div>
@@ -260,55 +260,55 @@ export default function AdminEventsPage() {
             <>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Title *</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Title *</label>
                   <input value={leForm.title} onChange={(e) => setLeForm({ ...leForm, title: e.target.value })}
                     placeholder="e.g. Monthly Olympiad — May"
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Tier</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Tier</label>
                   <select value={leForm.tier} onChange={(e) => setLeForm({ ...leForm, tier: e.target.value as Tier })}
-                    className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50">
-                    {tiers.map((t) => <option key={t} value={t} className="bg-[#0f0f1a]">{t}</option>)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50">
+                    {tiers.map((t) => <option key={t} value={t} >{t}</option>)}
                   </select>
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Description</label>
+                <label className="text-xs text-slate-500 uppercase tracking-wider">Description</label>
                 <textarea value={leForm.description} onChange={(e) => setLeForm({ ...leForm, description: e.target.value })}
                   rows={2} placeholder="Brief description..."
-                  className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all resize-none" />
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all resize-none" />
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-1.5 lg:col-span-2">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Scheduled At *</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Scheduled At *</label>
                   <input type="datetime-local" value={leForm.scheduledAt} onChange={(e) => setLeForm({ ...leForm, scheduledAt: e.target.value })}
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50 transition-all [color-scheme:dark]" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50 transition-all [color-scheme:light]" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Duration (min)</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Duration (min)</label>
                   <input type="number" min={10} value={leForm.duration} onChange={(e) => setLeForm({ ...leForm, duration: Number(e.target.value) })}
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Questions</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Questions</label>
                   <input type="number" min={1} value={leForm.questionCount} onChange={(e) => setLeForm({ ...leForm, questionCount: Number(e.target.value) })}
-                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50 transition-all" />
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Topic</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Topic</label>
                   <select value={leForm.topicId} onChange={(e) => setLeForm({ ...leForm, topicId: e.target.value })}
-                    className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50">
-                    {topicList.map((t) => <option key={t} value={t} className="bg-[#0f0f1a]">{t.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</option>)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50">
+                    {topicList.map((t) => <option key={t} value={t} >{t.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</option>)}
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Status</label>
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Status</label>
                   <select value={leForm.status} onChange={(e) => setLeForm({ ...leForm, status: e.target.value as LiveExam["status"] })}
-                    className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50">
-                    {(["upcoming", "live", "ended"] as LiveExam["status"][]).map((s) => <option key={s} value={s} className="bg-[#0f0f1a]">{s}</option>)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50">
+                    {(["upcoming", "live", "ended"] as LiveExam["status"][]).map((s) => <option key={s} value={s} >{s}</option>)}
                   </select>
                 </div>
               </div>
@@ -316,7 +316,7 @@ export default function AdminEventsPage() {
           )}
 
           <div className="flex gap-3 justify-end">
-            <button onClick={() => setShowForm(false)} className="px-5 py-2 rounded-xl text-sm text-[#94a3b8] hover:text-white transition-colors">Cancel</button>
+            <button onClick={() => setShowForm(false)} className="px-5 py-2 rounded-xl text-sm text-slate-500 hover:text-slate-900 transition-colors">Cancel</button>
             <button
               onClick={tab === "olympiad" ? saveOlympiad : tab === "internal" ? saveInternal : saveLiveExam}
               disabled={tab === "olympiad" ? !evForm.title.trim() : tab === "internal" ? !intForm.title.trim() : (!leForm.title.trim() || !leForm.scheduledAt)}
@@ -330,9 +330,9 @@ export default function AdminEventsPage() {
       {/* Delete confirm */}
       {deleteId && (
         <div className="glass rounded-2xl p-5 border border-red-500/30 flex items-center justify-between gap-4">
-          <p className="text-sm text-white">Are you sure you want to <span className="text-red-400 font-semibold">delete</span> this event?</p>
+          <p className="text-sm text-slate-900">Are you sure you want to <span className="text-red-400 font-semibold">delete</span> this event?</p>
           <div className="flex gap-2 shrink-0">
-            <button onClick={() => setDeleteId(null)} className="px-4 py-1.5 rounded-lg text-sm text-[#94a3b8] hover:text-white transition-colors">Cancel</button>
+            <button onClick={() => setDeleteId(null)} className="px-4 py-1.5 rounded-lg text-sm text-slate-500 hover:text-slate-900 transition-colors">Cancel</button>
             <button onClick={doDelete} className="px-4 py-1.5 rounded-lg text-sm bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors font-medium">Delete</button>
           </div>
         </div>
@@ -350,9 +350,9 @@ export default function AdminEventsPage() {
                     <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full uppercase"
                       style={{ backgroundColor: `${color}20`, color }}>{ev.type}</span>
                   </div>
-                  <p className="font-heading font-semibold text-white text-sm">{ev.title}</p>
-                  <p className="text-xs text-[#64748b] line-clamp-2">{ev.description}</p>
-                  <div className="flex flex-wrap gap-3 text-xs text-[#94a3b8]">
+                  <p className="font-heading font-semibold text-slate-900 text-sm">{ev.title}</p>
+                  <p className="text-xs text-slate-400 line-clamp-2">{ev.description}</p>
+                  <div className="flex flex-wrap gap-3 text-xs text-slate-500">
                     <span className="flex items-center gap-1.5"><Calendar size={11} /> {ev.date}</span>
                     <span className="flex items-center gap-1.5"><MapPin size={11} /> {ev.location}</span>
                     {ev.officialLink && (
@@ -361,14 +361,14 @@ export default function AdminEventsPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <button onClick={() => openEditOlympiad(ev)} className="p-2 rounded-lg text-[#64748b] hover:text-[#a78bfa] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
-                  <button onClick={() => { setDeleteId(ev.id); setTab("olympiad"); }} className="p-2 rounded-lg text-[#64748b] hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
+                  <button onClick={() => openEditOlympiad(ev)} className="p-2 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
+                  <button onClick={() => { setDeleteId(ev.id); setTab("olympiad"); }} className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
                 </div>
               </div>
             );
           })}
-          {filteredEvents.length === 0 && <p className="text-center text-[#64748b] text-sm py-10">No olympiad events found.</p>}
-          <p className="text-xs text-[#475569] text-center">{filteredEvents.length} of {events.length} events</p>
+          {filteredEvents.length === 0 && <p className="text-center text-slate-400 text-sm py-10">No olympiad events found.</p>}
+          <p className="text-xs text-slate-400 text-center">{filteredEvents.length} of {events.length} events</p>
         </div>
       )}
 
@@ -384,22 +384,22 @@ export default function AdminEventsPage() {
                     <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded"
                       style={{ backgroundColor: `${color}25`, color }}>{ev.type}</span>
                   </div>
-                  <p className="font-heading font-semibold text-white text-sm">{ev.title}</p>
-                  <p className="text-xs text-[#64748b]">{ev.subtitle}</p>
-                  <div className="flex gap-3 text-xs text-[#94a3b8]">
+                  <p className="font-heading font-semibold text-slate-900 text-sm">{ev.title}</p>
+                  <p className="text-xs text-slate-400">{ev.subtitle}</p>
+                  <div className="flex gap-3 text-xs text-slate-500">
                     <span className="flex items-center gap-1.5"><Calendar size={11} /> {ev.date}</span>
                     <span className="flex items-center gap-1.5"><Clock size={11} /> {ev.time}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <button onClick={() => openEditInternal(ev)} className="p-2 rounded-lg text-[#64748b] hover:text-[#a78bfa] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
-                  <button onClick={() => { setDeleteId(ev.id); setTab("internal"); }} className="p-2 rounded-lg text-[#64748b] hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
+                  <button onClick={() => openEditInternal(ev)} className="p-2 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
+                  <button onClick={() => { setDeleteId(ev.id); setTab("internal"); }} className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
                 </div>
               </div>
             );
           })}
-          {filteredInternal.length === 0 && <p className="text-center text-[#64748b] text-sm py-10">No internal sessions found.</p>}
-          <p className="text-xs text-[#475569] text-center">{filteredInternal.length} of {internalEvents.length} sessions</p>
+          {filteredInternal.length === 0 && <p className="text-center text-slate-400 text-sm py-10">No internal sessions found.</p>}
+          <p className="text-xs text-slate-400 text-center">{filteredInternal.length} of {internalEvents.length} sessions</p>
         </div>
       )}
 
@@ -421,23 +421,23 @@ export default function AdminEventsPage() {
                       {ex.status}
                     </span>
                   </div>
-                  <p className="font-heading font-semibold text-white text-sm">{ex.title}</p>
-                  <p className="text-xs text-[#64748b] line-clamp-1">{ex.description}</p>
-                  <div className="flex flex-wrap gap-3 text-xs text-[#94a3b8]">
+                  <p className="font-heading font-semibold text-slate-900 text-sm">{ex.title}</p>
+                  <p className="text-xs text-slate-400 line-clamp-1">{ex.description}</p>
+                  <div className="flex flex-wrap gap-3 text-xs text-slate-500">
                     <span className="flex items-center gap-1.5"><Calendar size={11} /> {dt.toLocaleString()}</span>
                     <span className="flex items-center gap-1.5"><Clock size={11} /> {ex.duration} min</span>
                     <span>{ex.questionCount} questions · {ex.topicId.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <button onClick={() => openEditLiveExam(ex)} className="p-2 rounded-lg text-[#64748b] hover:text-[#a78bfa] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
-                  <button onClick={() => { setDeleteId(ex.id); setTab("live-exam"); }} className="p-2 rounded-lg text-[#64748b] hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
+                  <button onClick={() => openEditLiveExam(ex)} className="p-2 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
+                  <button onClick={() => { setDeleteId(ex.id); setTab("live-exam"); }} className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
                 </div>
               </div>
             );
           })}
-          {filteredLiveExams.length === 0 && <p className="text-center text-[#64748b] text-sm py-10">No live exams found.</p>}
-          <p className="text-xs text-[#475569] text-center">{filteredLiveExams.length} of {liveExams.length} live exams</p>
+          {filteredLiveExams.length === 0 && <p className="text-center text-slate-400 text-sm py-10">No live exams found.</p>}
+          <p className="text-xs text-slate-400 text-center">{filteredLiveExams.length} of {liveExams.length} live exams</p>
         </div>
       )}
     </div>

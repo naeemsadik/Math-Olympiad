@@ -89,10 +89,10 @@ export default function AdminPuzzlesPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="font-heading text-3xl font-bold text-white flex items-center gap-2">
-            <Puzzle size={24} className="text-[#a78bfa]" /> Daily Puzzles
+          <h1 className="font-heading text-3xl font-bold text-slate-900 flex items-center gap-2">
+            <Puzzle size={24} className="text-[#d97706]" /> Daily Puzzles
           </h1>
-          <p className="text-[#94a3b8] text-sm mt-1">Manage daily challenge puzzles and view student submissions.</p>
+          <p className="text-slate-500 text-sm mt-1">Manage daily challenge puzzles and view student submissions.</p>
         </div>
         {tab === "puzzles" && (
           <button onClick={openCreate} className="flex items-center gap-2 gradient-orange glow-orange text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:scale-105 transition-all">
@@ -102,12 +102,12 @@ export default function AdminPuzzlesPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-white/[0.04] border border-white/[0.06] rounded-xl p-1 w-fit">
+      <div className="flex gap-1 bg-slate-50 border border-slate-100 rounded-xl p-1 w-fit">
         {(["puzzles", "submissions"] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`px-5 py-2 rounded-lg text-sm font-medium transition-all capitalize ${tab === t ? "gradient-orange text-white" : "text-[#94a3b8] hover:text-white"}`}
+            className={`px-5 py-2 rounded-lg text-sm font-medium transition-all capitalize ${tab === t ? "gradient-orange text-white" : "text-slate-500 hover:text-slate-900"}`}
           >
             {t === "puzzles" ? `Puzzles (${puzzles.length})` : `Submissions (${submissions.length})`}
           </button>
@@ -120,45 +120,45 @@ export default function AdminPuzzlesPage() {
           {showForm && (
             <div className="glass rounded-2xl p-6 border border-[#d97706]/30 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-heading font-semibold text-white">{editId ? "Edit Puzzle" : "New Puzzle"}</h3>
-                <button onClick={() => setShowForm(false)} className="text-[#64748b] hover:text-white transition-colors"><X size={18} /></button>
+                <h3 className="font-heading font-semibold text-slate-900">{editId ? "Edit Puzzle" : "New Puzzle"}</h3>
+                <button onClick={() => setShowForm(false)} className="text-slate-400 hover:text-slate-900 transition-colors"><X size={18} /></button>
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Title</label>
-                  <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Puzzle title..." className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all" />
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Title</label>
+                  <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Puzzle title..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Date</label>
-                  <input value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50 transition-all" />
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Date</label>
+                  <input value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50 transition-all" />
                 </div>
               </div>
               <div className="space-y-1.5">
-                <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Problem Statement</label>
-                <textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={4} placeholder="Enter the full problem statement..." className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-[#475569] outline-none focus:border-[#d97706]/50 transition-all resize-none" />
+                <label className="text-xs text-slate-500 uppercase tracking-wider">Problem Statement</label>
+                <textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={4} placeholder="Enter the full problem statement..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-[#d97706]/50 transition-all resize-none" />
               </div>
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Difficulty</label>
-                  <select value={form.difficulty} onChange={(e) => setForm({ ...form, difficulty: e.target.value as Difficulty })} className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50 transition-all">
-                    {difficulties.map((d) => <option key={d} value={d} className="bg-[#0f0f1a]">{d}</option>)}
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Difficulty</label>
+                  <select value={form.difficulty} onChange={(e) => setForm({ ...form, difficulty: e.target.value as Difficulty })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50 transition-all">
+                    {difficulties.map((d) => <option key={d} value={d} >{d}</option>)}
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Tier</label>
-                  <select value={form.tier} onChange={(e) => setForm({ ...form, tier: e.target.value as Tier })} className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50 transition-all">
-                    {tiers.map((t) => <option key={t} value={t} className="bg-[#0f0f1a]">{t}</option>)}
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Tier</label>
+                  <select value={form.tier} onChange={(e) => setForm({ ...form, tier: e.target.value as Tier })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50 transition-all">
+                    {tiers.map((t) => <option key={t} value={t} >{t}</option>)}
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs text-[#94a3b8] uppercase tracking-wider">Topic</label>
-                  <select value={form.topic} onChange={(e) => setForm({ ...form, topic: e.target.value })} className="w-full bg-white/[0.06] border border-white/[0.08] rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-[#d97706]/50 transition-all">
-                    {topics.map((t) => <option key={t} value={t} className="bg-[#0f0f1a]">{t}</option>)}
+                  <label className="text-xs text-slate-500 uppercase tracking-wider">Topic</label>
+                  <select value={form.topic} onChange={(e) => setForm({ ...form, topic: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:border-[#d97706]/50 transition-all">
+                    {topics.map((t) => <option key={t} value={t} >{t}</option>)}
                   </select>
                 </div>
               </div>
               <div className="flex gap-3 justify-end">
-                <button onClick={() => setShowForm(false)} className="px-5 py-2 rounded-xl text-sm text-[#94a3b8] hover:text-white transition-colors">Cancel</button>
+                <button onClick={() => setShowForm(false)} className="px-5 py-2 rounded-xl text-sm text-slate-500 hover:text-slate-900 transition-colors">Cancel</button>
                 <button onClick={save} disabled={!form.title.trim() || !form.content.trim()} className="flex items-center gap-2 gradient-orange text-white text-sm font-semibold px-5 py-2 rounded-xl hover:scale-105 transition-all disabled:opacity-50 disabled:scale-100">
                   <Check size={15} /> {editId ? "Save Changes" : "Create Puzzle"}
                 </button>
@@ -168,9 +168,9 @@ export default function AdminPuzzlesPage() {
 
           {deleteId && (
             <div className="glass rounded-2xl p-5 border border-red-500/30 flex items-center justify-between gap-4">
-              <p className="text-sm text-white">Delete <span className="text-red-400 font-semibold">&ldquo;{puzzles.find(p => p.id === deleteId)?.title}&rdquo;</span>? This cannot be undone.</p>
+              <p className="text-sm text-slate-900">Delete <span className="text-red-400 font-semibold">&ldquo;{puzzles.find(p => p.id === deleteId)?.title}&rdquo;</span>? This cannot be undone.</p>
               <div className="flex gap-2 shrink-0">
-                <button onClick={() => setDeleteId(null)} className="px-4 py-1.5 rounded-lg text-sm text-[#94a3b8] hover:text-white transition-colors">Cancel</button>
+                <button onClick={() => setDeleteId(null)} className="px-4 py-1.5 rounded-lg text-sm text-slate-500 hover:text-slate-900 transition-colors">Cancel</button>
                 <button onClick={doDelete} className="px-4 py-1.5 rounded-lg text-sm bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors font-medium">Delete</button>
               </div>
             </div>
@@ -183,16 +183,16 @@ export default function AdminPuzzlesPage() {
                   <div className="flex items-center gap-3 mb-2 flex-wrap">
                     <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full" style={{ backgroundColor: `${tierColors[p.tier]}18`, color: tierColors[p.tier] }}>{p.tier}</span>
                     <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full" style={{ backgroundColor: `${diffColors[p.difficulty]}18`, color: diffColors[p.difficulty] }}>{p.difficulty}</span>
-                    <span className="text-xs text-[#64748b]">{p.topic}</span>
-                    <span className="text-xs text-[#475569]">{p.date}</span>
-                    <span className="text-xs text-[#475569]">{submissions.filter(s => s.puzzleId === p.id).length} submissions</span>
+                    <span className="text-xs text-slate-400">{p.topic}</span>
+                    <span className="text-xs text-slate-400">{p.date}</span>
+                    <span className="text-xs text-slate-400">{submissions.filter(s => s.puzzleId === p.id).length} submissions</span>
                   </div>
-                  <p className="font-heading font-semibold text-white mb-1">{p.title}</p>
-                  <p className="text-sm text-[#64748b] leading-relaxed line-clamp-2">{p.content}</p>
+                  <p className="font-heading font-semibold text-slate-900 mb-1">{p.title}</p>
+                  <p className="text-sm text-slate-400 leading-relaxed line-clamp-2">{p.content}</p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  <button onClick={() => openEdit(p)} className="p-2 rounded-lg text-[#64748b] hover:text-[#a78bfa] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
-                  <button onClick={() => confirmDelete(p.id)} className="p-2 rounded-lg text-[#64748b] hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
+                  <button onClick={() => openEdit(p)} className="p-2 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors"><Pencil size={15} /></button>
+                  <button onClick={() => confirmDelete(p.id)} className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={15} /></button>
                 </div>
               </div>
             ))}
@@ -207,20 +207,20 @@ export default function AdminPuzzlesPage() {
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
               <div className="glass rounded-2xl p-6 max-w-lg w-full border border-white/[0.1] space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-heading font-semibold text-white">Submission Detail</h3>
-                  <button onClick={() => setViewSub(null)} className="text-[#64748b] hover:text-white transition-colors"><X size={18} /></button>
+                  <h3 className="font-heading font-semibold text-slate-900">Submission Detail</h3>
+                  <button onClick={() => setViewSub(null)} className="text-slate-400 hover:text-slate-900 transition-colors"><X size={18} /></button>
                 </div>
                 <div className="space-y-3 text-sm">
                   <div className="grid grid-cols-2 gap-3">
-                    <div><p className="text-xs text-[#64748b] uppercase tracking-wider mb-0.5">Student</p><p className="text-white font-medium">{viewSub.studentName}</p></div>
-                    <div><p className="text-xs text-[#64748b] uppercase tracking-wider mb-0.5">Institute</p><p className="text-white">{viewSub.studentInstitute}</p></div>
-                    <div><p className="text-xs text-[#64748b] uppercase tracking-wider mb-0.5">Tier</p><span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ backgroundColor: `${tierColors[viewSub.studentTier]}18`, color: tierColors[viewSub.studentTier] }}>{viewSub.studentTier}</span></div>
-                    <div><p className="text-xs text-[#64748b] uppercase tracking-wider mb-0.5">Submitted</p><p className="text-white">{viewSub.submittedAt}</p></div>
+                    <div><p className="text-xs text-slate-400 uppercase tracking-wider mb-0.5">Student</p><p className="text-slate-900 font-medium">{viewSub.studentName}</p></div>
+                    <div><p className="text-xs text-slate-400 uppercase tracking-wider mb-0.5">Institute</p><p className="text-slate-900">{viewSub.studentInstitute}</p></div>
+                    <div><p className="text-xs text-slate-400 uppercase tracking-wider mb-0.5">Tier</p><span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ backgroundColor: `${tierColors[viewSub.studentTier]}18`, color: tierColors[viewSub.studentTier] }}>{viewSub.studentTier}</span></div>
+                    <div><p className="text-xs text-slate-400 uppercase tracking-wider mb-0.5">Submitted</p><p className="text-slate-900">{viewSub.submittedAt}</p></div>
                   </div>
-                  <div><p className="text-xs text-[#64748b] uppercase tracking-wider mb-1">Puzzle</p><p className="text-white font-medium">{viewSub.puzzleTitle}</p></div>
+                  <div><p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Puzzle</p><p className="text-slate-900 font-medium">{viewSub.puzzleTitle}</p></div>
                   <div>
-                    <p className="text-xs text-[#64748b] uppercase tracking-wider mb-1">Full Answer</p>
-                    <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3 text-[#94a3b8] leading-relaxed">{viewSub.answer}</div>
+                    <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">Full Answer</p>
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-slate-500 leading-relaxed">{viewSub.answer}</div>
                   </div>
                   {viewSub.isCorrect !== undefined && (
                     <div className={`px-3 py-2 rounded-lg text-sm font-medium ${viewSub.isCorrect ? "bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
@@ -237,7 +237,7 @@ export default function AdminPuzzlesPage() {
               <button
                 key={t}
                 onClick={() => setFilterTier(t)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${filterTier === t ? (t === "All" ? "gradient-orange text-white" : "text-white") : "bg-white/[0.06] text-[#94a3b8] hover:text-white"}`}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${filterTier === t ? (t === "All" ? "gradient-orange text-white" : "text-white") : "bg-slate-50 text-slate-500 hover:text-slate-900"}`}
                 style={filterTier === t && t !== "All" ? { backgroundColor: tierColors[t as Tier] } : {}}
               >
                 {t}
@@ -248,8 +248,8 @@ export default function AdminPuzzlesPage() {
           <div className="space-y-3">
             {filteredSubs.length === 0 ? (
               <div className="glass rounded-2xl p-10 text-center">
-                <Inbox size={32} className="text-[#64748b] mx-auto mb-3" />
-                <p className="text-[#94a3b8] text-sm">No submissions for this tier.</p>
+                <Inbox size={32} className="text-slate-400 mx-auto mb-3" />
+                <p className="text-slate-500 text-sm">No submissions for this tier.</p>
               </div>
             ) : (
               filteredSubs.map((s) => (
@@ -262,14 +262,14 @@ export default function AdminPuzzlesPage() {
                           {s.isCorrect ? "✓ Correct" : "✗ Incorrect"}
                         </span>
                       )}
-                      <span className="text-xs text-[#475569]">{s.submittedAt}</span>
+                      <span className="text-xs text-slate-400">{s.submittedAt}</span>
                     </div>
-                    <p className="text-white font-semibold text-sm">{s.studentName}</p>
-                    <p className="text-xs text-[#64748b]">{s.studentInstitute}</p>
-                    <p className="text-xs text-[#94a3b8] mt-1">Puzzle: <span className="text-white">{s.puzzleTitle}</span></p>
-                    <p className="text-xs text-[#64748b] mt-1 line-clamp-1">{s.answer}</p>
+                    <p className="text-slate-900 font-semibold text-sm">{s.studentName}</p>
+                    <p className="text-xs text-slate-400">{s.studentInstitute}</p>
+                    <p className="text-xs text-slate-500 mt-1">Puzzle: <span className="text-slate-900">{s.puzzleTitle}</span></p>
+                    <p className="text-xs text-slate-400 mt-1 line-clamp-1">{s.answer}</p>
                   </div>
-                  <button onClick={() => setViewSub(s)} className="p-2 rounded-lg text-[#64748b] hover:text-[#a78bfa] hover:bg-[#d97706]/10 transition-colors shrink-0">
+                  <button onClick={() => setViewSub(s)} className="p-2 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors shrink-0">
                     <Eye size={15} />
                   </button>
                 </div>

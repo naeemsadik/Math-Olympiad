@@ -59,17 +59,17 @@ export default function KeyInitiativesSection() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <section className="bg-[#fef9f0] border-y border-[#d97706]/10 py-20">
-      <div className="max-w-screen-xl mx-auto px-6">
+    <section className="bg-[#fef9f0] border-y border-[#d97706]/10 py-12 sm:py-20">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
         {/* Section header */}
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-xs text-[#92400e] font-semibold uppercase tracking-widest mb-5">
+        <div className="text-center mb-10 sm:mb-14">
+          <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-xs text-[#92400e] font-semibold uppercase tracking-widest mb-4 sm:mb-5">
             Explore UIU CMOR
           </div>
-          <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-slate-900 leading-tight">
+          <h2 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-900 leading-tight">
             Our Key <span className="gradient-text-orange">Initiatives</span>
           </h2>
-          <p className="mt-4 text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed px-2">
             Everything UIU CMOR offers — from practice and training to celebration and community.
           </p>
         </div>

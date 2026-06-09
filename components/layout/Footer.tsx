@@ -82,11 +82,11 @@ export default function Footer() {
         <div className="absolute right-0 bottom-0 w-80 h-80 rounded-full bg-violet-900/10 blur-3xl" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 pt-14 pb-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-8">
         {/* Main grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-10 border-b border-slate-800">
-          {/* Brand column */}
-          <div className="lg:col-span-2 flex flex-col gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-8 border-b border-slate-800">
+          {/* Brand column — centered on mobile */}
+          <div className="lg:col-span-2 flex flex-col gap-5 items-center text-center md:items-start md:text-left">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 shrink-0 rounded-full overflow-hidden ring-2 ring-[#d97706]/50 shadow-lg shadow-[#d97706]/20">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -106,12 +106,12 @@ export default function Footer() {
               Elevating the standard of Mathematical Excellence at United International University.
             </p>
 
-            <blockquote className="border-l-2 border-[#d97706]/60 pl-3 italic text-sm text-[#d97706]/90">
+            <blockquote className="border-l-0 md:border-l-2 border-t-2 md:border-t-0 border-[#d97706]/60 pt-3 md:pt-0 md:pl-3 italic text-sm text-[#d97706]/90">
               &ldquo;Think Deep. Solve Smart.&rdquo;
             </blockquote>
 
             {/* Social icons */}
-            <div className="flex items-center gap-2.5 mt-1">
+            <div className="flex items-center justify-center md:justify-start gap-2.5 mt-1">
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
@@ -125,9 +125,9 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Nav columns */}
+          {/* Nav columns — centered on mobile */}
           {navCols.map((col) => (
-            <div key={col.title} className="flex flex-col gap-4">
+            <div key={col.title} className="flex flex-col gap-4 items-center text-center md:items-start md:text-left">
               <h4 className="text-[10px] font-bold text-[#d97706]/70 uppercase tracking-[0.15em]">
                 {col.title}
               </h4>
@@ -138,7 +138,7 @@ export default function Footer() {
                       href={link.href}
                       className="text-sm text-slate-400 hover:text-white transition-colors duration-150 inline-flex items-center gap-1.5 group"
                     >
-                      <span className="w-0 group-hover:w-2 h-px bg-[#d97706] transition-all duration-200 inline-block" />
+                      <span className="hidden md:inline-block w-0 group-hover:w-2 h-px bg-[#d97706] transition-all duration-200" />
                       {link.label}
                     </Link>
                   </li>
@@ -149,7 +149,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <div className="pt-5 flex flex-col items-center sm:flex-row sm:justify-between gap-2 text-xs text-slate-500 text-center sm:text-left">
           <p>© 2025 UIU Centre for Math Olympiad and Research. All rights reserved.</p>
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />

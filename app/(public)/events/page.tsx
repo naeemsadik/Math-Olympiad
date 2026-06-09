@@ -459,83 +459,99 @@ export default function OlympiadsPage() {
   const worldCount = allEvents.filter((e) => e.scope === "Worldwide").length;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Hero */}
-      <section
-        className="relative overflow-hidden py-20"
-        style={{ background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)" }}
-      >
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/8 rounded-full blur-2xl" />
-          <div
-            className="absolute inset-0 opacity-[0.06]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
-              backgroundSize: "50px 50px",
-            }}
-          />
+      <section className="relative overflow-hidden pt-10 sm:pt-14 pb-8 sm:pb-10">
+        {/* Decorative ambient circles — hidden on mobile to reduce clutter */}
+        <div className="pointer-events-none absolute inset-0 hidden sm:block">
+          <div className="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full border border-[#d97706]/8" />
+          <div className="absolute -top-16 -right-16 w-[360px] h-[360px] rounded-full border border-[#d97706]/10" />
+          <div className="absolute top-10 right-20 w-[200px] h-[200px] rounded-full bg-[#d97706]/5 blur-2xl" />
+          <div className="absolute -bottom-16 -left-16 w-[320px] h-[320px] rounded-full border border-[#f59e0b]/10" />
+          <div className="absolute bottom-8 left-10 w-[120px] h-[120px] rounded-full bg-[#f59e0b]/6 blur-xl" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-6 text-center">
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45 }}
-            className="inline-flex items-center gap-2 bg-white/15 border border-white/25 rounded-full px-4 py-1.5 text-xs text-white font-semibold uppercase tracking-widest mb-6"
+            className="inline-flex items-center gap-2 bg-[#d97706]/8 border border-[#d97706]/20 rounded-full px-4 py-1.5 text-xs text-[#92400e] font-semibold uppercase tracking-widest mb-4 sm:mb-6"
           >
-            <Zap size={11} className="text-yellow-200" />
+            <Zap size={11} className="text-[#d97706]" />
             Live &amp; Upcoming Worldwide
           </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.08 }}
-            className="font-heading font-extrabold text-5xl md:text-6xl text-white leading-tight"
+            className="font-heading font-extrabold text-3xl sm:text-5xl md:text-6xl text-slate-900 leading-tight"
           >
-            Olympiads &amp; <span className="text-yellow-200">Events</span>
+            Olympiads &amp; <span className="gradient-text-orange">Events</span>
           </motion.h1>
+
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.16 }}
-            className="mt-5 text-white/70 text-base max-w-xl mx-auto leading-relaxed"
+            className="mt-3 sm:mt-5 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed px-2"
           >
             From UIU internal rounds to IMO — every competition, workshop, and training camp in one place.
           </motion.p>
 
-          {/* Stats */}
+          {/* Circular stat cards */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.24 }}
-            className="mt-8 flex flex-wrap gap-8 justify-center text-sm text-white/80"
+            transition={{ duration: 0.5, delay: 0.28 }}
+            className="mt-8 sm:mt-10 grid grid-cols-4 sm:flex sm:flex-wrap justify-center gap-3 sm:gap-5"
           >
             {[
-              { icon: CalendarDays, text: `${allEvents.length} Events Listed` },
-              { icon: Flag, text: `${bdCount} Bangladesh Events` },
-              { icon: Globe, text: `${worldCount} International Events` },
-              { icon: Users, text: "500+ Registered Students" },
-            ].map(({ icon: Icon, text }) => (
-              <span key={text} className="flex items-center gap-2">
-                <Icon size={14} className="text-yellow-200" />
-                {text}
-              </span>
+              { icon: CalendarDays, value: allEvents.length, label: "Events Listed",       color: "#d97706" },
+              { icon: Flag,         value: bdCount,          label: "Bangladesh Events",    color: "#10b981" },
+              { icon: Globe,        value: worldCount,       label: "International Events", color: "#0891b2" },
+              { icon: Users,        value: "500+",           label: "Registered Students",  color: "#7c3aed" },
+            ].map(({ icon: Icon, value, label, color }) => (
+              <div
+                key={label}
+                className="flex flex-col items-center gap-1.5 sm:gap-2"
+              >
+                <div
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center shadow-lg"
+                  style={{
+                    background: "#fff",
+                    border: `2px solid ${color}25`,
+                    boxShadow: `0 4px 20px ${color}18, 0 1px 4px rgba(15,23,42,0.06)`,
+                  }}
+                >
+                  <Icon size={13} style={{ color }} className="mb-0.5" />
+                  <p className="font-heading font-extrabold text-base sm:text-lg leading-none" style={{ color }}>
+                    {value}
+                  </p>
+                </div>
+                <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium text-center leading-tight max-w-16 sm:max-w-18">{label}</p>
+              </div>
             ))}
           </motion.div>
+        </div>
+
+        {/* Bottom divider */}
+        <div className="mt-10 max-w-7xl mx-auto px-6">
+          <div className="h-px bg-linear-to-r from-transparent via-[#d97706]/20 to-transparent" />
         </div>
       </section>
 
       {/* Filter + Search bar */}
       <div className="sticky top-16 z-40 bg-white border-b border-slate-100 shadow-sm shadow-slate-100/80">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
           {/* Category tabs */}
           <div className="flex items-center gap-1 flex-wrap">
             {filterTabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-150"
+                className="px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-150"
                 style={
                   activeTab === tab
                     ? { background: "#d97706", color: "#fff", boxShadow: "0 2px 8px rgba(217,119,6,0.3)" }
@@ -569,7 +585,7 @@ export default function OlympiadsPage() {
       </div>
 
       {/* Events grid */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <AnimatePresence mode="wait">
           {filtered.length === 0 ? (
             <motion.div

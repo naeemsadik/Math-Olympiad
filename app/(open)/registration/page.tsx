@@ -70,39 +70,39 @@ export default function RegistrationPage() {
     <div className="space-y-0">
 
         {/* Hero */}
-        <section className="relative overflow-hidden pt-16 pb-12">
+        <section className="relative overflow-hidden pt-10 pb-8">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-[#d97706]/6 blur-[120px]" />
           </div>
-          <div className="relative max-w-screen-xl mx-auto px-6 text-center">
-            <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-sm text-[#92400e] mb-7">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-sm text-[#92400e] mb-5">
               <ClipboardList size={13} />
               Open Registrations
             </div>
-            <h1 className="font-heading font-extrabold text-5xl md:text-[3.5rem] text-slate-900 leading-[1.1] tracking-tight">
+            <h1 className="font-heading font-extrabold text-3xl sm:text-5xl md:text-[3.5rem] text-slate-900 leading-[1.1] tracking-tight">
               <span className="gradient-text-orange">Register</span> for Events
             </h1>
-            <p className="mt-5 text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+            <p className="mt-3 sm:mt-5 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed px-2">
               Sign up for upcoming olympiads, training camps, workshops, and seminars hosted by UIU CMOR.
             </p>
           </div>
         </section>
 
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="h-px bg-gradient-to-r from-transparent via-[#d97706]/20 to-transparent" />
         </div>
 
         {/* Events list */}
-        <section className="max-w-screen-xl mx-auto px-6 py-14">
-          <h2 className="font-heading text-2xl font-bold text-slate-900 mb-8">Upcoming Events</h2>
-          <div className="grid md:grid-cols-2 gap-5">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+          <h2 className="font-heading text-xl sm:text-2xl font-bold text-slate-900 mb-6 sm:mb-8">Upcoming Events</h2>
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
             {events.map(({ title, type, date, deadline, seats, registered, color, icon: Icon, open, desc }) => {
               const pct = seats && registered ? Math.round((registered / seats) * 100) : null;
               const isSelected = selected === title;
               return (
                 <div
                   key={title}
-                  className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                  className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm hover:shadow-md transition-all cursor-pointer"
                   style={isSelected ? { borderColor: `${color}40`, boxShadow: `0 4px 20px ${color}15` } : {}}
                   onClick={() => setSelected(isSelected ? null : title)}
                 >
@@ -159,12 +159,12 @@ export default function RegistrationPage() {
           </div>
         </section>
 
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="h-px bg-gradient-to-r from-transparent via-[#d97706]/20 to-transparent" />
         </div>
 
         {/* Registration form */}
-        <section className="max-w-screen-xl mx-auto px-6 py-14" id="form">
+        <section className="max-w-7xl mx-auto px-6 py-14" id="form">
           <div className="max-w-2xl mx-auto">
             <h2 className="font-heading text-2xl font-bold text-slate-900 mb-2">Registration Form</h2>
             <p className="text-slate-400 text-sm mb-8">

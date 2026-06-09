@@ -36,17 +36,17 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-20 bg-[#fef9f0] border-t border-[#d97706]/10">
-      <div className="max-w-screen-xl mx-auto px-6">
+    <section className="py-12 sm:py-20 bg-[#fef9f0] border-t border-[#d97706]/10">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-xs text-[#92400e] font-semibold uppercase tracking-widest mb-5">
+        <div className="text-center mb-10 sm:mb-14">
+          <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-xs text-[#92400e] font-semibold uppercase tracking-widest mb-4 sm:mb-5">
             Your Path to Excellence
           </div>
-          <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-slate-900 leading-tight">
+          <h2 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-900 leading-tight">
             How It <span className="gradient-text-orange">Works</span>
           </h2>
-          <p className="mt-4 text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed px-2">
             From day one to the olympiad podium — a clear roadmap built for every level of student.
           </p>
         </div>

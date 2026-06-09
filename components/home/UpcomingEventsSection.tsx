@@ -69,18 +69,18 @@ const recentEvents = [
 
 export default function RecentEventsSection() {
   return (
-    <section className="py-20 bg-white border-t border-slate-100">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-12 sm:py-20 bg-white border-t border-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+        <div className="flex flex-col items-center text-center md:flex-row md:items-end md:text-left justify-between gap-4 mb-8 sm:mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-xs text-[#92400e] font-semibold uppercase tracking-widest mb-4">
+            <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-xs text-[#92400e] font-semibold uppercase tracking-widest mb-3 sm:mb-4">
               Highlights
             </div>
-            <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-slate-900 leading-tight">
+            <h2 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-900 leading-tight">
               Recent <span className="gradient-text-orange">Events</span>
             </h2>
-            <p className="mt-3 text-slate-500 text-base max-w-md leading-relaxed">
+            <p className="mt-2 sm:mt-3 text-slate-500 text-sm sm:text-base max-w-md leading-relaxed">
               A look at our competitions, camps, workshops, and seminars from the past year.
             </p>
           </div>

@@ -2,20 +2,49 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Bell, ChevronDown, LayoutDashboard, LogOut, User, Lock } from "lucide-react";
+import {
+  Bell, ChevronDown, LayoutDashboard, LogOut, User, Lock,
+  Menu, X, Puzzle, Radio, FileText, Sigma, Dumbbell,
+  Users, ClipboardList, BookOpen, MessageSquare, Shield,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: "Home", href: "/", protected: false, exact: true },
-  { label: "About", href: "/about", protected: false },
-  { label: "Leaderboard", href: "/leaderboard", protected: false },
-  { label: "Olympiads", href: "/events", protected: false },
-  { label: "Hall of Fame", href: "/hall-of-fame", protected: false },
-  { label: "Gallery", href: "/gallery", protected: false },
-  { label: "My Dashboard", href: "/dashboard", protected: true },
+  { label: "Home",        href: "/",             protected: false, exact: true },
+  { label: "About",       href: "/about",        protected: false },
+  { label: "Leaderboard", href: "/leaderboard",  protected: false },
+  { label: "Olympiads",   href: "/events",       protected: false },
+  { label: "Hall of Fame",href: "/hall-of-fame", protected: false },
+  { label: "Gallery",     href: "/gallery",      protected: false },
+  { label: "My Dashboard",href: "/dashboard",    protected: true  },
+];
+
+const studentMobileLinks = [
+  { icon: LayoutDashboard, label: "Dashboard",     href: "/dashboard"   },
+  { icon: Puzzle,          label: "Daily Puzzle",  href: "/daily-puzzle"},
+  { icon: Radio,           label: "Live Exam",     href: "/live-exam"   },
+  { icon: FileText,        label: "Tests",         href: "/tests"       },
+  { icon: Sigma,           label: "Topics",        href: "/topics"      },
+  { icon: Dumbbell,        label: "Training",      href: "/training"    },
+  { icon: Users,           label: "Community",     href: "/community"   },
+  { icon: ClipboardList,   label: "Registration",  href: "/registration"},
+  { icon: Bell,            label: "Announcements", href: "/notices"     },
+];
+
+const adminMobileLinks = [
+  { icon: LayoutDashboard, label: "Dashboard",     href: "/admin/dashboard"    },
+  { icon: Users,           label: "Students",      href: "/admin/students"     },
+  { icon: Puzzle,          label: "Puzzles",       href: "/admin/puzzles"      },
+  { icon: FileText,        label: "Tests",         href: "/admin/tests"        },
+  { icon: Sigma,           label: "Questions",     href: "/admin/questions"    },
+  { icon: BookOpen,        label: "Topics",        href: "/admin/topics"       },
+  { icon: MessageSquare,   label: "Community",     href: "/admin/community"    },
+  { icon: Shield,          label: "Events",        href: "/admin/events"       },
+  { icon: ClipboardList,   label: "Registration",  href: "/admin/registration" },
+  { icon: Bell,            label: "Announcements", href: "/admin/notices"      },
 ];
 
 export default function Navbar() {
@@ -23,6 +52,7 @@ export default function Navbar() {
   const router = useRouter();
   const { user, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -43,13 +73,18 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
+
   const signOut = () => {
     logout();
     setOpen(false);
+    setMobileOpen(false);
     router.push("/");
   };
 
   const authUser = mounted ? user : null;
+  const mobileSidebarLinks = authUser?.role === "ADMIN" ? adminMobileLinks : studentMobileLinks;
 
   return (
     <header
@@ -63,7 +98,7 @@ export default function Navbar() {
       {/* Gold top accent line */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#d97706]/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
           <div className="w-9 h-9 shrink-0 rounded-full overflow-hidden ring-2 ring-[#d97706]/40 shadow-md shadow-[#d97706]/15">
@@ -80,10 +115,12 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Nav links — centered */}
+        {/* Nav links — centered (desktop only) */}
         <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1">
           {navLinks.map((link) => {
-            const isActive = link.exact ? pathname === link.href : (pathname === link.href || pathname.startsWith(link.href + "/"));
+            const isActive = link.exact
+              ? pathname === link.href
+              : pathname === link.href || pathname.startsWith(link.href + "/");
             const isLocked = link.protected && !authUser;
             return (
               <Link
@@ -100,10 +137,7 @@ export default function Navbar() {
                 {isLocked && (
                   <Lock
                     size={10}
-                    className={cn(
-                      "transition-colors",
-                      isActive ? "text-white/70" : "text-slate-400"
-                    )}
+                    className={cn("transition-colors", isActive ? "text-white/70" : "text-slate-400")}
                   />
                 )}
               </Link>
@@ -112,20 +146,22 @@ export default function Navbar() {
         </nav>
 
         {/* Right side */}
-        <div className="ml-auto flex items-center gap-2.5">
+        <div className="ml-auto flex items-center gap-2">
+          {/* Bell — shown on desktop only to save space on mobile */}
           {authUser && (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-[#d97706]/10 border border-slate-200 hover:border-[#d97706]/30 text-slate-500 hover:text-[#d97706] transition-all relative"
+              className="hidden sm:flex w-9 h-9 items-center justify-center rounded-lg bg-slate-100 hover:bg-[#d97706]/10 border border-slate-200 hover:border-[#d97706]/30 text-slate-500 hover:text-[#d97706] transition-all relative"
             >
               <Bell size={15} />
               <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#d97706] rounded-full" />
             </motion.button>
           )}
 
+          {/* Sign In (desktop only — shown in mobile hamburger) */}
           {!authUser && (
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="hidden md:block">
               <Link
                 href="/login"
                 className="inline-flex items-center text-sm font-semibold px-5 py-2 rounded-full bg-linear-to-r from-[#d97706] to-[#f59e0b] text-white shadow-md shadow-[#d97706]/25 hover:shadow-[#d97706]/40 transition-shadow"
@@ -135,8 +171,9 @@ export default function Navbar() {
             </motion.div>
           )}
 
+          {/* User dropdown (desktop) */}
           {authUser && (
-            <div className="relative" ref={ref}>
+            <div className="relative hidden md:block" ref={ref}>
               <motion.button
                 onClick={() => setOpen((v) => !v)}
                 whileHover={{ scale: 1.02 }}
@@ -175,37 +212,30 @@ export default function Navbar() {
                         {authUser.role === "ADMIN" ? "Faculty Admin" : `${authUser.level} · ${authUser.tier ?? authUser.department}`}
                       </span>
                     </div>
-
                     <div className="py-1.5">
                       {authUser.role === "STUDENT" ? (
                         <>
                           <Link href="/dashboard" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
-                            <LayoutDashboard size={14} className="text-slate-400" />
-                            My Dashboard
+                            <LayoutDashboard size={14} className="text-slate-400" /> My Dashboard
                           </Link>
                           <Link href="/profile" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
-                            <User size={14} className="text-slate-400" />
-                            My Profile
+                            <User size={14} className="text-slate-400" /> My Profile
                           </Link>
                         </>
                       ) : (
                         <>
                           <Link href="/admin/dashboard" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
-                            <LayoutDashboard size={14} className="text-slate-400" />
-                            Admin Dashboard
+                            <LayoutDashboard size={14} className="text-slate-400" /> Admin Dashboard
                           </Link>
                           <Link href="/admin/profile" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
-                            <User size={14} className="text-slate-400" />
-                            Profile
+                            <User size={14} className="text-slate-400" /> Profile
                           </Link>
                         </>
                       )}
                     </div>
-
                     <div className="border-t border-slate-100 py-1.5">
                       <button onClick={signOut} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:text-red-600 hover:bg-red-50 transition-colors">
-                        <LogOut size={14} />
-                        Sign Out
+                        <LogOut size={14} /> Sign Out
                       </button>
                     </div>
                   </motion.div>
@@ -213,8 +243,129 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
           )}
+
+          {/* Hamburger (mobile only) */}
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.15 }}
+            className="md:hidden absolute left-0 right-0 top-16 z-40 bg-white border-b border-slate-200 shadow-xl overflow-y-auto"
+            style={{ maxHeight: "calc(100vh - 4rem)" }}
+          >
+            <div className="px-3 py-2">
+              {/* Main nav links */}
+              <div className="py-1">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 py-1">Navigate</p>
+                {navLinks.map((link) => {
+                  const isActive = link.exact
+                    ? pathname === link.href
+                    : pathname === link.href || pathname.startsWith(link.href + "/");
+                  const isLocked = link.protected && !authUser;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={cn(
+                        "flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors",
+                        isActive
+                          ? "bg-[#d97706]/10 text-[#d97706]"
+                          : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                      )}
+                    >
+                      {link.label}
+                      {isLocked && <Lock size={11} className="text-slate-300" />}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {/* Workspace links */}
+              {authUser && (
+                <div className="py-1 mt-1 border-t border-slate-100">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 py-1">
+                    {authUser.role === "ADMIN" ? "Admin Panel" : "My Workspace"}
+                  </p>
+                  {mobileSidebarLinks.map(({ icon: Icon, label, href }) => {
+                    const isActive = pathname === href || pathname.startsWith(href + "/");
+                    return (
+                      <Link
+                        key={href}
+                        href={href}
+                        onClick={() => setMobileOpen(false)}
+                        className={cn(
+                          "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
+                          isActive
+                            ? "bg-[#d97706]/10 text-[#d97706]"
+                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                        )}
+                      >
+                        <Icon
+                          size={15}
+                          className={cn("shrink-0", isActive ? "text-[#d97706]" : "text-slate-400")}
+                        />
+                        {label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Auth */}
+              <div className="py-2 mt-1 border-t border-slate-100">
+                {authUser ? (
+                  <>
+                    <div className="flex items-center gap-3 px-3 py-2 mb-1">
+                      <div className="w-9 h-9 rounded-full bg-linear-to-br from-[#d97706] to-[#f59e0b] flex items-center justify-center text-white text-sm font-bold shrink-0">
+                        {authUser.name[0]}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-slate-900 truncate">{authUser.name}</p>
+                        <p className="text-xs text-slate-400 truncate">{authUser.email}</p>
+                      </div>
+                    </div>
+                    <Link
+                      href={authUser.role === "ADMIN" ? "/admin/profile" : "/profile"}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-50 transition-colors"
+                    >
+                      <User size={15} className="text-slate-400" /> My Profile
+                    </Link>
+                    <button
+                      onClick={signOut}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-red-500 hover:bg-red-50 transition-colors"
+                    >
+                      <LogOut size={15} /> Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="block w-full text-center gradient-orange text-white font-semibold py-3 rounded-xl text-sm"
+                  >
+                    Sign In
+                  </Link>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

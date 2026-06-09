@@ -49,11 +49,11 @@ export default function LeaderboardPage() {
   const podiumData = data.slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-slate-50/30">
-      <div className="max-w-7xl mx-auto px-6 py-10 space-y-6">
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-5 sm:space-y-6">
         {/* Header card */}
         <div
-          className="rounded-2xl p-8 relative overflow-hidden"
+          className="rounded-2xl p-5 sm:p-8 relative overflow-hidden"
           style={{
             background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
             boxShadow: "0 8px 32px rgba(217, 119, 6,0.3), 0 2px 8px rgba(217, 119, 6,0.2)",
@@ -70,25 +70,25 @@ export default function LeaderboardPage() {
               }}
             />
           </div>
-          <div className="relative flex items-center justify-between flex-wrap gap-4">
+          <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Star size={16} className="text-yellow-300" />
                 <p className="text-xs text-white/70 uppercase tracking-widest font-medium">Hall of Fame</p>
               </div>
-              <h1 className="font-heading text-4xl font-extrabold text-white leading-tight">
+              <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-white leading-tight">
                 Global <span className="text-yellow-300">Leaderboard</span>
               </h1>
-              <p className="text-white/65 mt-2 text-sm">
+              <p className="text-white/65 mt-1.5 text-sm">
                 The brightest minds from Bangladesh. Track your rank against the best.
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 shrink-0">
               {(["monthly", "alltime"] as const).map((t) => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
-                  className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
+                  className={`px-4 sm:px-5 py-2 rounded-full text-sm font-semibold transition-all ${
                     tab === t
                       ? "bg-white text-[#d97706] shadow-sm"
                       : "bg-white/15 text-white/80 hover:bg-white/25 border border-white/20"
@@ -125,7 +125,7 @@ export default function LeaderboardPage() {
 
         {/* Top 3 podium */}
         {podiumData.length >= 3 && (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {[1, 0, 2].map((order) => {
               const entry = podiumData[order];
               if (!entry) return null;
@@ -133,23 +133,23 @@ export default function LeaderboardPage() {
               return (
                 <div
                   key={entry.rank}
-                  className={`rounded-2xl p-5 border text-center bg-linear-to-b ${style.bg} ${style.border} ${style.shadow}`}
+                  className={`rounded-2xl p-3 sm:p-5 border text-center bg-linear-to-b ${style.bg} ${style.border} ${style.shadow}`}
                 >
-                  <div className={`text-2xl font-heading font-extrabold mb-2 ${style.rank}`}>
+                  <div className={`text-xl sm:text-2xl font-heading font-extrabold mb-2 ${style.rank}`}>
                     #{entry.rank}
                   </div>
-                  <div className="w-12 h-12 gradient-orange rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-3 shadow-md shadow-amber-500/25">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 gradient-orange rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg mx-auto mb-2 sm:mb-3 shadow-md shadow-amber-500/25">
                     {entry.name[0]}
                   </div>
-                  <p className="text-slate-900 font-semibold text-sm">{entry.name}</p>
-                  <p className="text-slate-400 text-xs mt-0.5">{entry.institute || entry.department}</p>
+                  <p className="text-slate-900 font-semibold text-xs sm:text-sm leading-tight">{entry.name}</p>
+                  <p className="text-slate-400 text-[10px] sm:text-xs mt-0.5 truncate">{entry.institute || entry.department}</p>
                   <span
-                    className="inline-block text-xs font-semibold px-2 py-0.5 rounded-full mt-2"
+                    className="inline-block text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full mt-1.5 sm:mt-2"
                     style={{ color: tierColors[entry.tier], backgroundColor: tierBg[entry.tier] }}
                   >
                     {entry.tier}
                   </span>
-                  <p className={`text-xl font-heading font-bold mt-2 ${style.rank}`}>
+                  <p className={`text-lg sm:text-xl font-heading font-bold mt-1.5 sm:mt-2 ${style.rank}`}>
                     {entry.rating.toLocaleString()}
                   </p>
                 </div>
@@ -170,36 +170,36 @@ export default function LeaderboardPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50/70">
-                <th className="text-left py-4 px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold">Rank</th>
-                <th className="text-left py-4 px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold">Competitor</th>
-                <th className="text-left py-4 px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold hidden sm:table-cell">Tier</th>
-                <th className="text-right py-4 px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold">Rating</th>
-                <th className="text-right py-4 px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold hidden sm:table-cell">Trend</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold">Rank</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold">Competitor</th>
+                <th className="text-left py-3 sm:py-4 px-3 sm:px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold hidden sm:table-cell">Tier</th>
+                <th className="text-right py-3 sm:py-4 px-3 sm:px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold">Rating</th>
+                <th className="text-right py-3 sm:py-4 px-3 sm:px-6 text-xs text-slate-400 uppercase tracking-wider font-semibold hidden sm:table-cell">Trend</th>
               </tr>
             </thead>
             <tbody>
               {visibleData.map((entry) => (
-                <tr key={entry.rank} className="border-t border-slate-50 hover:bg-[#d97706]/[0.025] transition-colors">
-                  <td className="py-4 px-6">
-                    <div className="flex items-center gap-2">
+                <tr key={entry.rank} className="border-t border-slate-50 hover:bg-[#d97706]/2.5 transition-colors">
+                  <td className="py-3 sm:py-4 px-3 sm:px-6">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       {rankIcon(entry.rank)}
                       <span className={`text-sm font-bold ${entry.rank <= 3 ? "text-[#d97706]" : "text-slate-400"}`}>
                         {String(entry.rank).padStart(2, "0")}
                       </span>
                     </div>
                   </td>
-                  <td className="py-4 px-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full gradient-orange flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm shadow-amber-500/20">
+                  <td className="py-3 sm:py-4 px-3 sm:px-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full gradient-orange flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm shadow-amber-500/20">
                         {entry.name[0]}
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold text-slate-900">{entry.name}</p>
-                        <p className="text-xs text-slate-400">{entry.institute || entry.department}</p>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-slate-900 truncate">{entry.name}</p>
+                        <p className="text-xs text-slate-400 truncate">{entry.institute || entry.department}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="py-4 px-6 hidden sm:table-cell">
+                  <td className="py-3 sm:py-4 px-3 sm:px-6 hidden sm:table-cell">
                     <span
                       className="text-xs font-semibold px-2.5 py-0.5 rounded-full"
                       style={{ color: tierColors[entry.tier], backgroundColor: tierBg[entry.tier] }}
@@ -207,10 +207,10 @@ export default function LeaderboardPage() {
                       {entry.tier}
                     </span>
                   </td>
-                  <td className="py-4 px-6 text-right">
+                  <td className="py-3 sm:py-4 px-3 sm:px-6 text-right">
                     <span className="text-sm font-bold text-slate-900">{entry.rating.toLocaleString()}</span>
                   </td>
-                  <td className="py-4 px-6 text-right hidden sm:table-cell">
+                  <td className="py-3 sm:py-4 px-3 sm:px-6 text-right hidden sm:table-cell">
                     {entry.trend === "up" && <TrendingUp size={16} className="text-emerald-500 ml-auto" />}
                     {entry.trend === "down" && <TrendingDown size={16} className="text-red-400 ml-auto" />}
                     {entry.trend === "stable" && <Minus size={16} className="text-slate-300 ml-auto" />}

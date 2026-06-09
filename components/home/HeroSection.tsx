@@ -41,13 +41,13 @@ export default function HeroSection() {
         ))}
       </div>
 
-      <div className="relative max-w-screen-xl mx-auto px-6 py-20 w-full flex flex-col items-center text-center">
+      <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 py-12 sm:py-20 w-full flex flex-col items-center text-center">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center bg-[#d97706]/10 border border-[#d97706]/30 rounded-full px-6 py-2.5 text-sm text-[#92400e] mb-8 font-heading font-bold tracking-wide shadow-sm shadow-amber-200/60"
+          className="inline-flex items-center bg-[#d97706]/10 border border-[#d97706]/30 rounded-full px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm text-[#92400e] mb-6 sm:mb-8 font-heading font-bold tracking-wide shadow-sm shadow-amber-200/60"
         >
           ✦ Think Deep. Solve Smart ✦
         </motion.div>
@@ -59,10 +59,10 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="font-heading font-extrabold leading-tight max-w-5xl"
         >
-          <span className="gradient-text-orange text-5xl md:text-7xl">UIU</span>
-          <span className="text-slate-700 text-5xl md:text-7xl"> CENTRE FOR</span>
+          <span className="gradient-text-orange text-4xl sm:text-5xl md:text-7xl">UIU</span>
+          <span className="text-slate-700 text-4xl sm:text-5xl md:text-7xl"> CENTRE FOR</span>
           <br />
-          <span className="gradient-text-orange text-2xl md:text-4xl tracking-wide">MATH OLYMPIAD AND RESEARCH</span>
+          <span className="gradient-text-orange text-xl sm:text-2xl md:text-4xl tracking-wide">MATH OLYMPIAD AND RESEARCH</span>
         </motion.h1>
 
         {/* Motto */}
@@ -70,7 +70,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-6 text-base text-slate-500 max-w-xl leading-relaxed"
+          className="mt-4 sm:mt-6 text-sm sm:text-base text-slate-500 max-w-xl leading-relaxed px-2"
         >
           Elevating the standard of Mathematical Excellence at United International University
         </motion.p>
@@ -80,18 +80,18 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-10 flex flex-wrap gap-4 justify-center"
+          className="mt-7 sm:mt-10 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center w-full sm:w-auto"
         >
           <Link
             href="/resources"
-            className="flex items-center gap-2 gradient-orange glow-orange text-white font-semibold px-8 py-4 rounded-full transition-all hover:scale-105 active:scale-95 text-sm"
+            className="flex items-center justify-center gap-2 gradient-orange glow-orange text-white font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all hover:scale-105 active:scale-95 text-sm"
           >
             <BookOpen size={17} />
             Resources &amp; Preparation
           </Link>
           <Link
             href="/activities"
-            className="flex items-center gap-2 bg-white text-slate-700 hover:text-[#d97706] font-semibold px-8 py-4 rounded-full transition-all text-sm"
+            className="flex items-center justify-center gap-2 bg-white text-slate-700 hover:text-[#d97706] font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all text-sm"
             style={{ boxShadow: "0 2px 12px rgba(15,23,42,0.1), 0 0 0 1px rgba(15,23,42,0.07)" }}
           >
             Our Activities
@@ -104,7 +104,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
-          className="mt-20 flex flex-wrap gap-2 justify-center"
+          className="mt-12 sm:mt-20 grid grid-cols-3 sm:flex sm:flex-wrap gap-0 justify-center w-full sm:w-auto"
         >
           {[
             { value: "4,281", label: "Active Students" },
@@ -113,11 +113,10 @@ export default function HeroSection() {
           ].map((stat, i) => (
             <div
               key={stat.label}
-              className="text-center px-10 py-4"
-              style={i < 2 ? { borderRight: "1px solid rgba(15,23,42,0.08)" } : {}}
+              className={`text-center px-4 sm:px-10 py-4 ${i < 2 ? "border-r border-slate-200/80" : ""}`}
             >
-              <p className="text-3xl font-heading font-extrabold gradient-text-orange">{stat.value}</p>
-              <p className="text-sm text-slate-500 mt-1.5 font-medium">{stat.label}</p>
+              <p className="text-2xl sm:text-3xl font-heading font-extrabold gradient-text-orange">{stat.value}</p>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-1.5 font-medium leading-tight">{stat.label}</p>
             </div>
           ))}
         </motion.div>

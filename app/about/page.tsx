@@ -77,19 +77,19 @@ export default function AboutPage() {
       <main className="flex-1">
 
         {/* ── Hero ── */}
-        <section className="relative overflow-hidden pt-16 pb-12">
+        <section className="relative overflow-hidden pt-10 pb-10">
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full bg-[#d97706]/6 blur-[130px]" />
           </div>
-          <div className="relative max-w-screen-xl mx-auto px-6 text-center">
-            <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-sm text-[#d97706] mb-7">
+          <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 text-center">
+            <div className="inline-flex items-center gap-2 bg-[#d97706]/10 border border-[#d97706]/25 rounded-full px-4 py-1.5 text-sm text-[#d97706] mb-5">
               <Sigma size={13} />
               United International University
             </div>
-            <h1 className="font-heading font-extrabold text-5xl md:text-[4rem] text-slate-900 leading-[1.1] tracking-tight">
+            <h1 className="font-heading font-extrabold text-3xl sm:text-5xl md:text-[4rem] text-slate-900 leading-[1.1] tracking-tight">
               About <span className="gradient-text">UIU Math Olympiad</span>
             </h1>
-            <p className="mt-5 text-slate-500 text-base max-w-xl mx-auto leading-relaxed">
+            <p className="mt-4 text-slate-500 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
               Founded in 2019, UIU Math Olympiad has been at the forefront of mathematical
               excellence and competitive problem solving within United International University.
             </p>
@@ -97,12 +97,12 @@ export default function AboutPage() {
         </section>
 
         {/* ── Divider ── */}
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
           <div className="h-px bg-gradient-to-r from-transparent via-[#d97706]/20 to-transparent" />
         </div>
 
         {/* ── Mission + Vision ── */}
-        <section className="max-w-screen-xl mx-auto px-6 py-12">
+        <section className="max-w-screen-xl mx-auto px-4 sm:px-6 py-10">
           <div className="grid md:grid-cols-2 gap-5">
             <div className="rounded-2xl p-8 bg-white border border-[#d97706]/20 relative overflow-hidden shadow-sm">
               <div className="absolute top-0 left-0 w-32 h-32 bg-[#d97706]/5 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
@@ -130,14 +130,14 @@ export default function AboutPage() {
         </section>
 
         {/* ── Stats ── */}
-        <section className="max-w-screen-xl mx-auto px-6 pb-14">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <section className="max-w-screen-xl mx-auto px-4 sm:px-6 pb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="rounded-2xl py-7 px-5 text-center bg-white border border-slate-200 hover:border-[#d97706]/30 transition-colors shadow-sm"
+                className="rounded-2xl py-5 sm:py-7 px-3 sm:px-5 text-center bg-white border border-slate-200 hover:border-[#d97706]/30 transition-colors shadow-sm"
               >
-                <p className="font-heading text-4xl font-extrabold gradient-text">{s.value}</p>
+                <p className="font-heading text-3xl sm:text-4xl font-extrabold gradient-text">{s.value}</p>
                 <p className="text-xs text-slate-400 mt-2 uppercase tracking-wider">{s.label}</p>
               </div>
             ))}
@@ -145,72 +145,89 @@ export default function AboutPage() {
         </section>
 
         {/* ── Divider ── */}
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
           <div className="h-px bg-gradient-to-r from-transparent via-[#d97706]/20 to-transparent" />
         </div>
 
         {/* ── Our Journey ── */}
-        <section className="max-w-screen-xl mx-auto px-6 py-14">
+        <section className="max-w-screen-xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <SectionLabel>Timeline</SectionLabel>
-          <h2 className="font-heading text-3xl font-bold text-slate-900 text-center mb-12">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-slate-900 text-center mb-8 sm:mb-12">
             History of Math Olympiad in Bangladesh
           </h2>
 
           <div className="relative max-w-3xl mx-auto">
-            <div className="absolute left-1/2 -translate-x-1/2 top-2 bottom-2 w-px bg-gradient-to-b from-transparent via-[#d97706]/30 to-transparent" />
-
-            <div className="flex flex-col gap-8">
-              {milestones.map((m, i) => {
-                const isRight = i % 2 === 0;
-                return (
-                  <div key={m.year} className="grid grid-cols-[1fr_28px_1fr] items-center">
-                    {isRight ? (
-                      <div />
-                    ) : (
-                      <div className="pr-7">
-                        <div className="rounded-xl p-5 bg-white border border-slate-200 hover:border-[#d97706]/30 transition-colors shadow-sm">
-                          <p className="text-xs font-bold text-[#d97706] mb-1.5">{m.year}</p>
-                          <p className="font-heading font-semibold text-slate-900 text-sm mb-1.5">{m.title}</p>
-                          <p className="text-xs text-slate-500 leading-relaxed">{m.desc}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="flex justify-center z-10">
-                      <div className="w-3.5 h-3.5 rounded-full bg-[#d97706] ring-2 ring-[#d97706]/30 ring-offset-2 ring-offset-[#f5f4f1]" />
+            {/* Mobile: left-side vertical timeline */}
+            <div className="sm:hidden relative pl-6">
+              <div className="absolute left-2 top-0 bottom-0 w-px bg-linear-to-b from-transparent via-[#d97706]/30 to-transparent" />
+              <div className="flex flex-col gap-5">
+                {milestones.map((m) => (
+                  <div key={m.year + "-m"} className="relative">
+                    <div className="absolute -left-4.5 top-4 w-3 h-3 rounded-full bg-[#d97706] ring-2 ring-[#d97706]/30 ring-offset-2 ring-offset-[#f5f4f1] z-10" />
+                    <div className="rounded-xl p-4 bg-white border border-slate-200 shadow-sm">
+                      <p className="text-xs font-bold text-[#d97706] mb-1">{m.year}</p>
+                      <p className="font-heading font-semibold text-slate-900 text-sm mb-1">{m.title}</p>
+                      <p className="text-xs text-slate-500 leading-relaxed">{m.desc}</p>
                     </div>
-
-                    {isRight ? (
-                      <div className="pl-7">
-                        <div className="rounded-xl p-5 bg-white border border-slate-200 hover:border-[#d97706]/30 transition-colors shadow-sm">
-                          <p className="text-xs font-bold text-[#d97706] mb-1.5">{m.year}</p>
-                          <p className="font-heading font-semibold text-slate-900 text-sm mb-1.5">{m.title}</p>
-                          <p className="text-xs text-slate-500 leading-relaxed">{m.desc}</p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div />
-                    )}
                   </div>
-                );
-              })}
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop: alternating left/right */}
+            <div className="hidden sm:block">
+              <div className="absolute left-1/2 -translate-x-1/2 top-2 bottom-2 w-px bg-linear-to-b from-transparent via-[#d97706]/30 to-transparent" />
+              <div className="flex flex-col gap-8">
+                {milestones.map((m, i) => {
+                  const isRight = i % 2 === 0;
+                  return (
+                    <div key={m.year} className="grid grid-cols-[1fr_28px_1fr] items-center">
+                      {isRight ? (
+                        <div />
+                      ) : (
+                        <div className="pr-7">
+                          <div className="rounded-xl p-5 bg-white border border-slate-200 hover:border-[#d97706]/30 transition-colors shadow-sm">
+                            <p className="text-xs font-bold text-[#d97706] mb-1.5">{m.year}</p>
+                            <p className="font-heading font-semibold text-slate-900 text-sm mb-1.5">{m.title}</p>
+                            <p className="text-xs text-slate-500 leading-relaxed">{m.desc}</p>
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex justify-center z-10">
+                        <div className="w-3.5 h-3.5 rounded-full bg-[#d97706] ring-2 ring-[#d97706]/30 ring-offset-2 ring-offset-[#f5f4f1]" />
+                      </div>
+                      {isRight ? (
+                        <div className="pl-7">
+                          <div className="rounded-xl p-5 bg-white border border-slate-200 hover:border-[#d97706]/30 transition-colors shadow-sm">
+                            <p className="text-xs font-bold text-[#d97706] mb-1.5">{m.year}</p>
+                            <p className="font-heading font-semibold text-slate-900 text-sm mb-1.5">{m.title}</p>
+                            <p className="text-xs text-slate-500 leading-relaxed">{m.desc}</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
 
         {/* ── Divider ── */}
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
           <div className="h-px bg-gradient-to-r from-transparent via-[#d97706]/20 to-transparent" />
         </div>
 
         {/* ── Team ── */}
-        <section className="max-w-screen-xl mx-auto px-6 py-14">
+        <section className="max-w-screen-xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
           <SectionLabel>People</SectionLabel>
-          <h2 className="font-heading text-3xl font-bold text-slate-900 text-center mb-2">The Team</h2>
-          <p className="text-slate-400 text-sm text-center mb-10">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-slate-900 text-center mb-2">The Team</h2>
+          <p className="text-slate-400 text-sm text-center mb-8">
             Faculty and students driving the UIU Math Olympiad ecosystem.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {team.map((member) => (
               <div
                 key={member.name}
@@ -228,18 +245,18 @@ export default function AboutPage() {
         </section>
 
         {/* ── Divider ── */}
-        <div className="max-w-screen-xl mx-auto px-6">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
           <div className="h-px bg-gradient-to-r from-transparent via-[#d97706]/20 to-transparent" />
         </div>
 
         {/* ── CTA ── */}
-        <section className="max-w-screen-xl mx-auto px-6 py-10 pb-14">
-          <div className="rounded-2xl px-8 py-7 bg-white border border-slate-200 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden shadow-sm">
+        <section className="max-w-screen-xl mx-auto px-4 sm:px-6 py-8 pb-12">
+          <div className="rounded-2xl px-5 sm:px-8 py-6 sm:py-7 bg-white border border-slate-200 flex flex-col items-center gap-5 text-center md:flex-row md:items-center md:text-left relative overflow-hidden shadow-sm">
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute left-0 top-0 w-48 h-full bg-[#d97706]/3 blur-3xl" />
             </div>
 
-            <div className="flex items-center gap-4 relative shrink-0">
+            <div className="flex flex-col sm:flex-row items-center gap-4 relative">
               <div className="w-10 h-10 rounded-xl bg-[#d97706]/10 border border-[#d97706]/20 flex items-center justify-center shrink-0">
                 <Users size={18} className="text-[#d97706]" />
               </div>
@@ -265,7 +282,7 @@ export default function AboutPage() {
               </a>
             </div>
 
-            <div className="flex flex-col gap-1 relative shrink-0 md:border-l md:border-slate-200 md:pl-6">
+            <div className="flex flex-col gap-1 relative shrink-0 md:border-l md:border-slate-200 md:pl-6 items-center md:items-start">
               <span className="flex items-center gap-1.5 text-xs text-slate-400 whitespace-nowrap">
                 <MapPin size={11} className="text-[#d97706]" /> Madani Ave, Dhaka
               </span>

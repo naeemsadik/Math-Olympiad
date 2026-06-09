@@ -83,8 +83,8 @@ export default function StudentDetailPage() {
   if (!student) {
     return (
       <div className="glass rounded-2xl p-12 text-center space-y-4">
-        <p className="text-[#94a3b8]">Student not found.</p>
-        <Link href="/admin/students" className="text-[#a78bfa] text-sm hover:underline">
+        <p className="text-slate-500">Student not found.</p>
+        <Link href="/admin/students" className="text-[#d97706] text-sm hover:underline">
           ← Back to Students
         </Link>
       </div>
@@ -103,7 +103,7 @@ export default function StudentDetailPage() {
       {/* Back link */}
       <Link
         href="/admin/students"
-        className="inline-flex items-center gap-1.5 text-xs text-[#64748b] hover:text-[#94a3b8] transition-colors"
+        className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-500 transition-colors"
       >
         <ArrowLeft size={13} /> Back to Students
       </Link>
@@ -122,7 +122,7 @@ export default function StudentDetailPage() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <h1 className="font-heading text-2xl font-bold text-white">{student.name}</h1>
+              <h1 className="font-heading text-2xl font-bold text-slate-900">{student.name}</h1>
               <span
                 className="text-xs font-semibold px-2.5 py-0.5 rounded-full"
                 style={{ backgroundColor: `${tierColor}20`, color: tierColor }}
@@ -139,14 +139,14 @@ export default function StudentDetailPage() {
                 className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${
                   student.status === "active"
                     ? "bg-[#10b981]/15 text-[#10b981]"
-                    : "bg-white/[0.06] text-[#64748b]"
+                    : "bg-slate-50 text-slate-400"
                 }`}
               >
                 {student.status}
               </span>
             </div>
-            <p className="text-sm text-[#64748b]">{student.email}</p>
-            <p className="text-xs text-[#64748b] mt-1">
+            <p className="text-sm text-slate-400">{student.email}</p>
+            <p className="text-xs text-slate-400 mt-1">
               {student.institute} · {student.dept || "—"} · Joined {student.joinedAt}
             </p>
           </div>
@@ -169,9 +169,9 @@ export default function StudentDetailPage() {
           <div key={label} className="glass rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-2">
               <Icon size={15} style={{ color }} />
-              <p className="text-xs text-[#64748b] uppercase tracking-wider">{label}</p>
+              <p className="text-xs text-slate-400 uppercase tracking-wider">{label}</p>
             </div>
-            <p className="font-heading text-2xl font-bold text-white">{value}</p>
+            <p className="font-heading text-2xl font-bold text-slate-900">{value}</p>
           </div>
         ))}
       </div>
@@ -182,14 +182,14 @@ export default function StudentDetailPage() {
         <div className="lg:col-span-2 space-y-5">
           {/* Recent Tests */}
           <div className="glass rounded-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-white/[0.06] flex items-center gap-2">
-              <BarChart2 size={15} className="text-[#a78bfa]" />
-              <h2 className="font-heading font-semibold text-white">Recent Test Results</h2>
+            <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2">
+              <BarChart2 size={15} className="text-[#d97706]" />
+              <h2 className="font-heading font-semibold text-slate-900">Recent Test Results</h2>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="text-xs text-[#64748b] uppercase tracking-wider border-b border-white/[0.04]">
+                  <tr className="text-xs text-slate-400 uppercase tracking-wider border-b border-slate-50">
                     <th className="text-left py-3 px-5 font-medium">Test</th>
                     <th className="text-left py-3 px-5 font-medium hidden sm:table-cell">Topic</th>
                     <th className="text-center py-3 px-5 font-medium">Score</th>
@@ -200,10 +200,10 @@ export default function StudentDetailPage() {
                 </thead>
                 <tbody>
                   {results.map((r, i) => (
-                    <tr key={i} className="border-t border-white/[0.04] hover:bg-white/[0.02] transition-colors">
-                      <td className="py-3 px-5 text-sm text-white font-medium">{r.name}</td>
+                    <tr key={i} className="border-t border-slate-50 hover:bg-slate-100/50 transition-colors">
+                      <td className="py-3 px-5 text-sm text-slate-900 font-medium">{r.name}</td>
                       <td className="py-3 px-5 hidden sm:table-cell">
-                        <span className="text-xs text-[#94a3b8] bg-white/[0.04] px-2 py-0.5 rounded-full">
+                        <span className="text-xs text-slate-500 bg-slate-50 px-2 py-0.5 rounded-full">
                           {r.topic}
                         </span>
                       </td>
@@ -221,11 +221,11 @@ export default function StudentDetailPage() {
                         </span>
                       </td>
                       <td className="py-3 px-5 text-center hidden md:table-cell">
-                        <span className="flex items-center justify-center gap-1 text-xs text-[#64748b]">
+                        <span className="flex items-center justify-center gap-1 text-xs text-slate-400">
                           <Clock size={11} /> {r.duration}
                         </span>
                       </td>
-                      <td className="py-3 px-5 text-center hidden sm:table-cell text-xs text-[#64748b]">
+                      <td className="py-3 px-5 text-center hidden sm:table-cell text-xs text-slate-400">
                         {r.date}
                       </td>
                       <td className="py-3 px-5 text-center">
@@ -245,17 +245,17 @@ export default function StudentDetailPage() {
           {/* Topic Progress */}
           <div className="glass rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-4">
-              <TrendingUp size={15} className="text-[#a78bfa]" />
-              <h2 className="font-heading font-semibold text-white">Topic Progress</h2>
+              <TrendingUp size={15} className="text-[#d97706]" />
+              <h2 className="font-heading font-semibold text-slate-900">Topic Progress</h2>
             </div>
             <div className="space-y-4">
               {topicProgress.map((t) => (
                 <div key={t.name}>
                   <div className="flex justify-between text-xs mb-1.5">
-                    <span className="text-[#94a3b8]">{t.name}</span>
-                    <span className="text-white font-medium">{t.pct}%</span>
+                    <span className="text-slate-500">{t.name}</span>
+                    <span className="text-slate-900 font-medium">{t.pct}%</span>
                   </div>
-                  <div className="h-1.5 rounded-full bg-white/[0.06]">
+                  <div className="h-1.5 rounded-full bg-slate-50">
                     <div
                       className="h-1.5 rounded-full transition-all"
                       style={{ width: `${t.pct}%`, backgroundColor: tierColor }}
@@ -271,7 +271,7 @@ export default function StudentDetailPage() {
         <div className="space-y-4">
           {/* Score ring */}
           <div className="glass rounded-2xl p-5 text-center">
-            <h3 className="font-heading font-semibold text-white mb-4">Overall Score</h3>
+            <h3 className="font-heading font-semibold text-slate-900 mb-4">Overall Score</h3>
             <div className="flex justify-center">
               <div className="relative w-28 h-28">
                 <svg className="w-28 h-28 -rotate-90" viewBox="0 0 96 96">
@@ -287,12 +287,12 @@ export default function StudentDetailPage() {
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="font-heading font-bold text-white text-2xl">{student.avgScore}%</span>
-                  <span className="text-[10px] text-[#64748b]">average</span>
+                  <span className="font-heading font-bold text-slate-900 text-2xl">{student.avgScore}%</span>
+                  <span className="text-[10px] text-slate-400">average</span>
                 </div>
               </div>
             </div>
-            <p className="text-xs text-[#64748b] mt-3">
+            <p className="text-xs text-slate-400 mt-3">
               Based on {student.testsTaken} tests taken
             </p>
           </div>
@@ -301,7 +301,7 @@ export default function StudentDetailPage() {
           <div className="glass rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <Flame size={14} className="text-[#f59e0b]" />
-              <h3 className="font-heading font-semibold text-white">7-Day Activity</h3>
+              <h3 className="font-heading font-semibold text-slate-900">7-Day Activity</h3>
             </div>
             <div className="flex gap-1.5">
               {Array.from({ length: 7 }, (_, i) => {
@@ -309,22 +309,22 @@ export default function StudentDetailPage() {
                 return (
                   <div key={i} className="flex-1 flex flex-col items-center gap-1">
                     <div
-                      className={`w-full h-8 rounded-lg ${active ? "" : "bg-white/[0.04]"}`}
+                      className={`w-full h-8 rounded-lg ${active ? "" : "bg-slate-50"}`}
                       style={active ? { backgroundColor: `${tierColor}40` } : {}}
                     />
-                    <span className="text-[10px] text-[#64748b]">
+                    <span className="text-[10px] text-slate-400">
                       {["M", "T", "W", "T", "F", "S", "S"][i]}
                     </span>
                   </div>
                 );
               })}
             </div>
-            <p className="text-xs text-[#64748b] mt-2 text-center">{student.streak} day streak</p>
+            <p className="text-xs text-slate-400 mt-2 text-center">{student.streak} day streak</p>
           </div>
 
           {/* Details */}
           <div className="glass rounded-2xl p-5 space-y-3">
-            <h3 className="font-heading font-semibold text-white">Details</h3>
+            <h3 className="font-heading font-semibold text-slate-900">Details</h3>
             {[
               { label: "Department", value: student.dept || "—" },
               { label: "Institute", value: student.institute },
@@ -332,8 +332,8 @@ export default function StudentDetailPage() {
               { label: "XP Rank", value: `#${Math.max(1, 32 - Math.floor(student.xp / 200))}` },
             ].map(({ label, value }) => (
               <div key={label} className="flex justify-between text-sm">
-                <span className="text-[#64748b]">{label}</span>
-                <span className="text-white font-medium text-right max-w-[60%] truncate">{value}</span>
+                <span className="text-slate-400">{label}</span>
+                <span className="text-slate-900 font-medium text-right max-w-[60%] truncate">{value}</span>
               </div>
             ))}
           </div>
@@ -342,20 +342,20 @@ export default function StudentDetailPage() {
           <div className="glass rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-3">
               <Trophy size={14} className="text-[#f59e0b]" />
-              <h3 className="font-heading font-semibold text-white">Test Summary</h3>
+              <h3 className="font-heading font-semibold text-slate-900">Test Summary</h3>
             </div>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-[#64748b]">Passed</span>
+                <span className="text-slate-400">Passed</span>
                 <span className="text-[#10b981] font-medium">{passed}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#64748b]">Failed</span>
+                <span className="text-slate-400">Failed</span>
                 <span className="text-red-400 font-medium">{results.length - passed}</span>
               </div>
-              <div className="flex justify-between border-t border-white/[0.06] pt-2 mt-1">
-                <span className="text-[#64748b]">Pass Rate</span>
-                <span className="text-white font-semibold">
+              <div className="flex justify-between border-t border-slate-100 pt-2 mt-1">
+                <span className="text-slate-400">Pass Rate</span>
+                <span className="text-slate-900 font-semibold">
                   {Math.round((passed / results.length) * 100)}%
                 </span>
               </div>
