@@ -6,6 +6,7 @@ import TopicMastery from "@/components/dashboard/TopicMastery";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import LearningPath from "@/components/dashboard/LearningPath";
 import RecommendedNext from "@/components/dashboard/RecommendedNext";
+import StreakCard from "@/components/dashboard/StreakCard";
 import { useAuthStore } from "@/store/authStore";
 import type { Tier } from "@/types";
 
@@ -62,6 +63,7 @@ export default function DashboardPage() {
           <RecentActivity activity={stats.recentActivity} />
         </div>
         <div className="space-y-6">
+          <StreakCard streak={user?.streak ?? 0} />
           <RecommendedNext recommended={stats.recommendedNext} />
           <LearningPath path={stats.learningPath} />
         </div>

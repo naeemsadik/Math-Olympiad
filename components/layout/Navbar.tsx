@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   Bell, ChevronDown, LayoutDashboard, LogOut, User, Lock,
   Menu, X, Puzzle, Radio, FileText, Sigma, Dumbbell,
-  Users, ClipboardList, BookOpen, MessageSquare, Shield,
+  Users, ClipboardList, BookOpen, MessageSquare, Shield, Award,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
@@ -19,6 +19,7 @@ const navLinks = [
   { label: "Olympiads",   href: "/events",       protected: false },
   { label: "Hall of Fame",href: "/hall-of-fame", protected: false },
   { label: "Gallery",     href: "/gallery",      protected: false },
+  { label: "Verify",      href: "/verify",       protected: false },
   { label: "My Dashboard",href: "/dashboard",    protected: true  },
 ];
 
@@ -44,6 +45,7 @@ const adminMobileLinks = [
   { icon: MessageSquare,   label: "Community",     href: "/admin/community"    },
   { icon: Shield,          label: "Events",        href: "/admin/events"       },
   { icon: ClipboardList,   label: "Registration",  href: "/admin/registration" },
+  { icon: Award,           label: "Certificates",  href: "/admin/certificates" },
   { icon: Bell,            label: "Announcements", href: "/admin/notices"      },
 ];
 
@@ -98,7 +100,7 @@ export default function Navbar() {
       {/* Gold top accent line */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#d97706]/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-3">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
           <div className="w-9 h-9 shrink-0 rounded-full overflow-hidden ring-2 ring-[#d97706]/40 shadow-md shadow-[#d97706]/15">
@@ -116,7 +118,7 @@ export default function Navbar() {
         </Link>
 
         {/* Nav links — centered (desktop only) */}
-        <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1">
+        <nav className="hidden md:flex flex-1 justify-center items-center gap-0.5 min-w-0">
           {navLinks.map((link) => {
             const isActive = link.exact
               ? pathname === link.href
@@ -127,7 +129,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative px-4 py-2 text-sm font-semibold rounded-lg flex items-center gap-1.5 transition-all duration-150",
+                  "relative px-3 py-2 text-sm font-semibold rounded-lg flex items-center gap-1.5 transition-all duration-150 whitespace-nowrap",
                   isActive
                     ? "bg-[#d97706] text-white shadow-md shadow-[#d97706]/30"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
@@ -146,7 +148,7 @@ export default function Navbar() {
         </nav>
 
         {/* Right side */}
-        <div className="ml-auto flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {/* Bell — shown on desktop only to save space on mobile */}
           {authUser && (
             <motion.button

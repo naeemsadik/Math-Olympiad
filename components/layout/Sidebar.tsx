@@ -15,6 +15,7 @@ import {
   Bell,
   Dumbbell,
   ClipboardList,
+  Award,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
@@ -40,8 +41,9 @@ const adminLinks = [
   { icon: BookOpen, label: "Topics", href: "/admin/topics" },
   { icon: MessageSquare, label: "Community", href: "/admin/community" },
   { icon: Shield, label: "Events", href: "/admin/events" },
-  { icon: ClipboardList, label: "Registration", href: "/admin/registration" },
-  { icon: Bell, label: "Announcements", href: "/admin/notices" },
+  { icon: ClipboardList, label: "Registration",  href: "/admin/registration" },
+  { icon: Award,         label: "Certificates",  href: "/admin/certificates" },
+  { icon: Bell,          label: "Announcements", href: "/admin/notices"      },
 ];
 
 export default function Sidebar() {
