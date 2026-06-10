@@ -15,6 +15,7 @@ const EMPTY_FORM = {
   studentName: "", studentId: "", dept: "", institute: "UIU",
   achievement: "", event: "", eventType: "Competition",
   issuedAt: "", tier: "Beginner",
+  issuedBy: "UIU Centre for Math Olympiad and Research",
   description: "",
   signatoryName: "Prof. Dr. Mohammed Hossain",
   signatoryTitle: "Director, UIU Centre for Math Olympiad and Research",
