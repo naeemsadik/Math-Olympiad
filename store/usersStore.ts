@@ -22,7 +22,7 @@ export const useUsersStore = create<UsersState>()(
     }),
     {
       name: "uiu-users",
-      version: 2,
+      version: 4,
       migrate: (persisted: unknown) => {
         // Keep real signup users (not in mock), refresh all mock data
         const old = persisted as { users?: AdminUser[] } | undefined;

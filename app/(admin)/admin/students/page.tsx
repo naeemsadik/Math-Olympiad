@@ -84,6 +84,7 @@ export default function AdminStudentsPage() {
                 <th className="text-left py-3 px-6 font-medium">Student</th>
                 <th className="text-left py-3 px-6 font-medium hidden md:table-cell">Tier</th>
                 <th className="text-left py-3 px-6 font-medium hidden lg:table-cell">Institute</th>
+                <th className="text-left py-3 px-6 font-medium hidden xl:table-cell">Class / Year</th>
                 <th className="text-left py-3 px-6 font-medium hidden lg:table-cell">Level</th>
                 <th className="text-right py-3 px-6 font-medium hidden sm:table-cell">XP</th>
                 <th className="text-right py-3 px-6 font-medium hidden md:table-cell">Streak</th>
@@ -108,6 +109,7 @@ export default function AdminStudentsPage() {
                     <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${tierColors[u.tier]}18`, color: tierColors[u.tier] }}>{u.tier}</span>
                   </td>
                   <td className="py-3.5 px-6 hidden lg:table-cell"><span className="text-xs text-slate-500">{u.institute}</span></td>
+                  <td className="py-3.5 px-6 hidden xl:table-cell"><span className="text-xs text-slate-500">{u.classYear ?? <span className="text-slate-300">—</span>}</span></td>
                   <td className="py-3.5 px-6 hidden lg:table-cell">
                     <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${levelColors[u.level] ?? "#64748b"}18`, color: levelColors[u.level] ?? "#64748b" }}>{u.level}</span>
                   </td>

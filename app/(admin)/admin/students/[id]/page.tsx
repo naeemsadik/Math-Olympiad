@@ -328,6 +328,7 @@ export default function StudentDetailPage() {
             {[
               { label: "Department", value: student.dept || "—" },
               { label: "Institute", value: student.institute },
+              ...(student.classYear ? [{ label: "Class / Year", value: student.classYear }] : []),
               { label: "Joined", value: student.joinedAt },
               { label: "XP Rank", value: `#${Math.max(1, 32 - Math.floor(student.xp / 200))}` },
             ].map(({ label, value }) => (
