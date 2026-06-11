@@ -4,6 +4,8 @@ export type OlympiadType = "BdMO" | "AMC" | "IMO" | "INTERNAL";
 export type QuestionState = "unanswered" | "answered" | "marked" | "skipped";
 export type Tier = "Beginner" | "Intermediate" | "Advanced";
 
+export type InstitutionType = "School" | "College" | "University" | "Graduate";
+
 export interface User {
   id: string;
   name: string;
@@ -22,6 +24,10 @@ export interface User {
   address?: string;
   university?: string;
   about?: string;
+  institutionType?: InstitutionType;
+  classYear?: string;
+  whatsapp?: string;
+  placementDone?: boolean;
 }
 
 export interface Topic {

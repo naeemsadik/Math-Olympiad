@@ -4,25 +4,21 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   User, Mail, Phone, MapPin, Calendar, BookOpen, Edit3, Check, X,
-  GraduationCap, FileText, Building2, Star, Flame, Zap, Shield,
+  GraduationCap, FileText, Building2, Star, Flame, Zap,
 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useUsersStore } from "@/store/usersStore";
-import type { Tier } from "@/types";
+import type { InstitutionType } from "@/types";
 
 const genderOptions = ["Prefer not to say", "Male", "Female", "Non-binary", "Other"];
 const deptOptions = ["CSE", "EEE", "BBA", "Math", "Civil", "Other"];
-const TIERS: Tier[] = ["Beginner", "Intermediate", "Advanced"];
+const institutionTypeOptions: InstitutionType[] = ["School", "College", "University", "Graduate"];
 
-const tierColors: Record<Tier, string> = {
-  Beginner: "#10b981",
-  Intermediate: "#f59e0b",
-  Advanced: "#d97706",
-};
-const tierSubtitles: Record<Tier, string> = {
-  Beginner: "School Level",
-  Intermediate: "College Level",
-  Advanced: "University & Above",
+const CLASS_YEAR_OPTIONS: Record<InstitutionType, string[]> = {
+  School:     ["Class 1","Class 2","Class 3","Class 4","Class 5","Class 6","Class 7","Class 8","Class 9","Class 10"],
+  College:    ["Class 11","Class 12"],
+  University: ["1st Year","2nd Year","3rd Year","4th Year"],
+  Graduate:   ["Masters","PhD","Post-Doc"],
 };
 
 const cardStyle = {
@@ -50,7 +46,8 @@ export default function ProfilePage() {
   const [institute, setInstitute] = useState("");
   const [university, setUniversity] = useState("");
   const [dept, setDept] = useState("");
-  const [tier, setTier] = useState<Tier>("Beginner");
+  const [institutionType, setInstitutionType] = useState<InstitutionType | "">("");
+  const [classYear, setClassYear] = useState("");
   const [about, setAbout] = useState("");
 
   useEffect(() => { setMounted(true); }, []);
@@ -65,18 +62,17 @@ export default function ProfilePage() {
       setInstitute(user.institute ?? "");
       setUniversity(user.university ?? "");
       setDept(user.department ?? "");
-      setTier(user.tier ?? "Beginner");
+      setInstitutionType(user.institutionType ?? "");
+      setClassYear(user.classYear ?? "");
       setAbout(user.about ?? "");
     }
   }, [user]);
 
   if (!mounted || !user) return null;
 
-  const userTier = user.tier ?? "Beginner";
-
   const handleSave = () => {
-    updateProfile({ name, gender, dob, phone, address, institute, university, department: dept, tier, about });
-    updateUser(user.id, { name, dept, institute, tier });
+    updateProfile({ name, gender, dob, phone, address, institute, university, department: dept, institutionType: institutionType || undefined, classYear, about });
+    updateUser(user.id, { name, dept, institute });
     setEditing(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2500);
@@ -87,7 +83,8 @@ export default function ProfilePage() {
     setDob(user.dob ?? "");     setPhone(user.phone ?? "");
     setAddress(user.address ?? ""); setInstitute(user.institute ?? "");
     setUniversity(user.university ?? ""); setDept(user.department ?? "");
-    setTier(user.tier ?? "Beginner"); setAbout(user.about ?? "");
+    setInstitutionType(user.institutionType ?? ""); setClassYear(user.classYear ?? "");
+    setAbout(user.about ?? "");
     setEditing(false);
   };
 
@@ -113,12 +110,6 @@ export default function ProfilePage() {
               style={{ background: "linear-gradient(135deg, #f59e0b, #d97706)", boxShadow: "0 8px 24px rgba(217,119,6,0.35)" }}
             >
               {user.name[0]}
-            </div>
-            <div
-              className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center shadow-md"
-              style={{ backgroundColor: tierColors[userTier], boxShadow: `0 2px 8px ${tierColors[userTier]}50` }}
-            >
-              <Shield size={12} className="text-white" />
             </div>
           </div>
 
@@ -161,8 +152,13 @@ export default function ProfilePage() {
 
             {/* Stat chips */}
             <div className="flex flex-wrap gap-2.5 mt-4">
+              {user.classYear && (
+                <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl" style={{ backgroundColor: "#d97706" + "10", border: "1px solid " + "#d97706" + "20" }}>
+                  <GraduationCap size={13} style={{ color: "#d97706" }} />
+                  <span className="text-xs font-bold" style={{ color: "#d97706" }}>{user.classYear}</span>
+                </div>
+              )}
               {[
-                { icon: Shield, label: "Tier", value: userTier, color: tierColors[userTier] },
                 { icon: Star, label: "Level", value: user.level, color: "#d97706" },
                 { icon: Zap, label: "XP", value: user.xp.toLocaleString(), color: "#7c3aed" },
                 { icon: Flame, label: "Streak", value: `${user.streak}d`, color: "#10b981" },
@@ -247,28 +243,41 @@ export default function ProfilePage() {
               : <p className="text-sm text-slate-800 font-medium">{user.institute || <span className="text-slate-400 italic text-xs">Not set</span>}</p>}
           </div>
 
-          <div>
-            <p className={labelCls}>Competition Tier</p>
-            {editing ? (
-              <div className="grid grid-cols-3 gap-2">
-                {TIERS.map((t) => {
-                  const sel = tier === t;
-                  return (
-                    <button key={t} type="button" onClick={() => setTier(t)}
-                      className={`p-2.5 rounded-xl border text-left transition-all ${!sel ? "border-slate-200 bg-slate-50 hover:border-slate-300" : ""}`}
-                      style={sel ? { borderColor: `${tierColors[t]}60`, backgroundColor: `${tierColors[t]}12` } : {}}>
-                      <p className="font-bold text-xs" style={{ color: sel ? tierColors[t] : "#94a3b8" }}>{t}</p>
-                      <p className="text-[10px] text-slate-400 mt-0.5">{tierSubtitles[t]}</p>
-                    </button>
-                  );
-                })}
-              </div>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 text-sm font-bold px-3 py-1.5 rounded-full border"
-                style={{ color: tierColors[userTier], backgroundColor: `${tierColors[userTier]}12`, borderColor: `${tierColors[userTier]}35` }}>
-                <Shield size={11} /> {userTier} · {tierSubtitles[userTier]}
-              </span>
-            )}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className={labelCls}><GraduationCap size={10} /> Institution Type</p>
+              {editing ? (
+                <select
+                  value={institutionType}
+                  onChange={(e) => {
+                    const val = e.target.value as InstitutionType | "";
+                    setInstitutionType(val);
+                    setClassYear("");
+                  }}
+                  className={fieldCls}
+                >
+                  <option value="">Select type</option>
+                  {institutionTypeOptions.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              ) : (
+                <p className="text-sm text-slate-800 font-medium">{user.institutionType || <span className="text-slate-400 italic text-xs">Not set</span>}</p>
+              )}
+            </div>
+            <div>
+              <p className={labelCls}><BookOpen size={10} /> Class / Year</p>
+              {editing ? (
+                institutionType ? (
+                  <select value={classYear} onChange={(e) => setClassYear(e.target.value)} className={fieldCls}>
+                    <option value="">Select</option>
+                    {CLASS_YEAR_OPTIONS[institutionType].map((c) => <option key={c}>{c}</option>)}
+                  </select>
+                ) : (
+                  <input value={classYear} onChange={(e) => setClassYear(e.target.value)} placeholder="e.g. 3rd Year" className={fieldCls} />
+                )
+              ) : (
+                <p className="text-sm text-slate-800 font-medium">{user.classYear || <span className="text-slate-400 italic text-xs">Not set</span>}</p>
+              )}
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

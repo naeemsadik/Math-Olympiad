@@ -8,13 +8,6 @@ import LearningPath from "@/components/dashboard/LearningPath";
 import RecommendedNext from "@/components/dashboard/RecommendedNext";
 import StreakCard from "@/components/dashboard/StreakCard";
 import { useAuthStore } from "@/store/authStore";
-import type { Tier } from "@/types";
-
-const tierColors: Record<Tier, string> = {
-  Beginner: "#10b981",
-  Intermediate: "#f59e0b",
-  Advanced: "#d97706",
-};
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -27,16 +20,11 @@ export default function DashboardPage() {
       <div className="flex items-start justify-between flex-wrap gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span
-              className="text-xs font-semibold px-2.5 py-0.5 rounded-full border"
-              style={{
-                color: tierColors[tier],
-                backgroundColor: `${tierColors[tier]}15`,
-                borderColor: `${tierColors[tier]}40`,
-              }}
-            >
-              {tier}
-            </span>
+            {user?.classYear && (
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full border border-slate-200 bg-slate-50 text-slate-600">
+                {user.classYear}
+              </span>
+            )}
             {user?.institute && (
               <span className="text-xs text-[#64748b]">{user.institute}</span>
             )}

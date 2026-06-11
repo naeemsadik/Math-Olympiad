@@ -14,12 +14,12 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (ready && !user) {
-      router.replace("/login");
-    }
+    if (!ready) return;
+    if (!user) { router.replace("/login"); return; }
+    if (!user.placementDone) router.replace("/placement");
   }, [ready, user, router]);
 
-  if (!ready || !user) {
+  if (!ready || !user || !user.placementDone) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#080810]">
         <div className="w-8 h-8 rounded-full border-2 border-[#d97706] border-t-transparent animate-spin" />
