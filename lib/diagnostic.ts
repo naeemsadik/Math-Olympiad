@@ -162,3 +162,23 @@ export function pickRandomIds(ids: string[], count: number) {
   }
   return copy.slice(0, count);
 }
+
+export function shuffleOnce(ids: string[]) {
+  return pickRandomIds(ids, ids.length);
+}
+
+export function sumQuestionTimeSeconds(questions: Question[]) {
+  return questions.reduce((total, question) => total + (question.timeLimitSeconds ?? 90), 0);
+}
+
+export function formatDuration(totalSeconds: number) {
+  const seconds = Math.max(0, Math.floor(totalSeconds));
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainder = seconds % 60;
+  const parts: string[] = [];
+  if (hours) parts.push(`${hours} hr${hours === 1 ? "" : "s"}`);
+  if (minutes) parts.push(`${minutes} min`);
+  if (remainder || parts.length === 0) parts.push(`${remainder} sec`);
+  return parts.join(" ");
+}

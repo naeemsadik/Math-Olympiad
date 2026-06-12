@@ -46,27 +46,44 @@ const adminLinks = [
   { icon: Bell,          label: "Announcements", href: "/admin/notices"      },
 ];
 
-export default function Sidebar() {
+interface Props {
+  className?: string;
+  onNavigate?: () => void;
+}
+
+export default function Sidebar({ className, onNavigate }: Props) {
   const pathname = usePathname();
   const { user } = useAuthStore();
 
   const links = user?.role === "ADMIN" ? adminLinks : studentLinks;
+  const panelLabel = user?.role === "ADMIN" ? "Admin Panel" : "Student Panel";
 
   return (
-    <aside className="w-16 lg:w-56 shrink-0 flex flex-col gap-1 py-4 px-2">
-      {/* User info (desktop only) */}
+    <aside className={cn("w-64 shrink-0 flex flex-col gap-1 py-4 px-3", className)}>
+      <Link href="/" onClick={onNavigate} className="mb-3 flex items-center gap-3 rounded-2xl px-2 py-2">
+        <div className="w-10 h-10 shrink-0 rounded-full overflow-hidden ring-2 ring-[#d97706]/30 shadow-sm shadow-[#d97706]/15">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="UIU CMOR" className="w-full h-full object-cover" />
+        </div>
+        <div className="min-w-0">
+          <p className="font-heading text-sm font-bold text-slate-900">UIU CMOR</p>
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-[#d97706]">{panelLabel}</p>
+        </div>
+      </Link>
+
       {user && (
-        <div className="hidden lg:flex items-center gap-3 px-3 py-3 mb-2">
+        <div className="flex items-center gap-3 px-3 py-3 mb-3 rounded-2xl bg-slate-50 border border-slate-200">
           <div className="w-9 h-9 gradient-orange rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0">
             {user.name[0]}
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-slate-800 truncate">{user.name}</p>
-            <p className="text-xs text-slate-500 truncate">LEVEL: {user.level.toUpperCase()}</p>
+            <p className="text-xs text-slate-500 truncate">{user.role === "ADMIN" ? "Faculty Admin" : `Level: ${user.diagnosticAbilityLevel ?? user.level}`}</p>
           </div>
         </div>
       )}
 
+      <p className="px-3 pb-2 pt-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">Navigation</p>
       {links.map(({ icon: Icon, label, href }) => {
         const isActive = pathname === href || pathname.startsWith(href + "/");
         return (
@@ -74,6 +91,7 @@ export default function Sidebar() {
             key={href}
             href={href}
             title={label}
+            onClick={onNavigate}
             className={cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all",
               isActive
@@ -85,14 +103,14 @@ export default function Sidebar() {
               size={18}
               className={cn("shrink-0", isActive ? "text-[#d97706]" : "text-slate-400")}
             />
-            <span className="hidden lg:block">{label}</span>
+            <span>{label}</span>
           </Link>
         );
       })}
 
       {/* XP / Streak (student only, desktop) */}
       {user?.role === "STUDENT" && (
-        <div className="hidden lg:block mt-auto mx-1 p-3 rounded-xl bg-[#d97706]/5 border border-[#d97706]/10">
+        <div className="mt-auto mx-1 p-3 rounded-xl bg-[#d97706]/5 border border-[#d97706]/10">
           <p className="text-xs text-slate-400 font-semibold mb-1 uppercase tracking-wider">Current Goal</p>
           <p className="text-xs text-slate-700 font-medium">Qualify for National Math Olympiad</p>
           <div className="mt-2 h-1.5 rounded-full bg-slate-200">

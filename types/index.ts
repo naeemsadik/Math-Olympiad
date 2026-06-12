@@ -133,6 +133,21 @@ export interface DiagnosticAttempt {
   submittedAt?: string;
 }
 
+export interface PracticeAttempt {
+  id: string;
+  userId: string;
+  testId: string;
+  testTitle: string;
+  questionIds: string[];
+  currentIndex: number;
+  answers: Record<string, number>;
+  status: "in-progress" | "submitted";
+  startedAt: string;
+  currentQuestionStartedAt: string;
+  currentQuestionDeadline: string;
+  submittedAt?: string;
+}
+
 export interface TestAttempt {
   id: string;
   userId: string;
