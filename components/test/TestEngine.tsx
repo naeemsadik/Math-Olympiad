@@ -37,6 +37,7 @@ export default function TestEngine({ test, questions }: Props) {
   };
 
   const toggleMark = () => {
+    if (!currentQ) return;
     setStates((prev) => ({
       ...prev,
       [currentQ.id]:
@@ -47,6 +48,7 @@ export default function TestEngine({ test, questions }: Props) {
   };
 
   const clearResponse = () => {
+    if (!currentQ) return;
     setAnswers((prev) => {
       const next = { ...prev };
       delete next[currentQ.id];
@@ -66,6 +68,14 @@ export default function TestEngine({ test, questions }: Props) {
 
   const answeredCount = Object.values(states).filter((s) => s === "answered").length;
   const markedCount = Object.values(states).filter((s) => s === "marked").length;
+
+  if (!questions.length || !currentQ) {
+    return (
+      <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center">
+        <p className="text-sm text-slate-500">No questions are available for this test yet.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row gap-4 -m-6 p-6">

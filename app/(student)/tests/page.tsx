@@ -2,22 +2,17 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { tests } from "@/lib/mock/tests";
 import { Clock, BookOpen, ChevronRight, Lock } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
-import type { Tier } from "@/types";
+import { useTestStore } from "@/store/testStore";
+import type { AbilityLevel } from "@/types";
+import { abilityAllows, abilityColors, testMatchesClass } from "@/lib/diagnostic";
 
 const difficultyColors: Record<string, string> = {
   Beginner: "#10b981",
   Intermediate: "#f59e0b",
   Advanced: "#d97706",
   Elite: "#ef4444",
-};
-
-const tierColors: Record<Tier, string> = {
-  Beginner: "#10b981",
-  Intermediate: "#f59e0b",
-  Advanced: "#d97706",
 };
 
 const cardStyle = {
@@ -28,13 +23,17 @@ const cardStyle = {
 
 export default function TestsPage() {
   const { user } = useAuthStore();
+  const { tests } = useTestStore();
   const [lockedToast, setLockedToast] = useState<string | null>(null);
 
-  const userTier = user?.tier ?? "Beginner";
-  const filteredTests = tests.filter((t) => t.tier === userTier);
+  const userAbility: AbilityLevel = user?.diagnosticAbilityLevel ?? "Beginner";
+  const practiceTests = tests.filter((test) => test.testType !== "diagnostic" && test.isPublic);
+  const filteredTests = practiceTests
+    .filter((test) => abilityAllows(userAbility, test.abilityLevel ?? "Beginner"))
+    .filter((test) => testMatchesClass(test, user?.classYear));
 
-  const handleLockedClick = (testTier: Tier) => {
-    setLockedToast(`This test is for ${testTier} tier students. Your tier is ${userTier}.`);
+  const handleLockedClick = (testAbility: AbilityLevel) => {
+    setLockedToast(`This test is for ${testAbility} level students. Your diagnostic level is used for access.`);
     setTimeout(() => setLockedToast(null), 3000);
   };
 
@@ -47,9 +46,9 @@ export default function TestsPage() {
         </div>
         <span
           className="text-xs font-bold px-3 py-1.5 rounded-full border self-center"
-          style={{ color: tierColors[userTier], backgroundColor: `${tierColors[userTier]}12`, borderColor: `${tierColors[userTier]}35` }}
+          style={{ color: abilityColors[userAbility], backgroundColor: `${abilityColors[userAbility]}12`, borderColor: `${abilityColors[userAbility]}35` }}
         >
-          {userTier}
+          {userAbility}
         </span>
       </div>
 
@@ -122,14 +121,14 @@ export default function TestsPage() {
       </div>
 
       {/* Other tiers teaser */}
-      {tests.filter((t) => t.tier !== userTier).length > 0 && (
+      {practiceTests.filter((test) => !filteredTests.some((visible) => visible.id === test.id)).length > 0 && (
         <div className="bg-white rounded-2xl p-5" style={cardStyle}>
-          <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-3">Other Tier Tests</p>
+          <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-3">Other Level Tests</p>
           <div className="flex flex-wrap gap-2">
-            {tests.filter((t) => t.tier !== userTier).map((test) => (
+            {practiceTests.filter((test) => !filteredTests.some((visible) => visible.id === test.id)).map((test) => (
               <button
                 key={test.id}
-                onClick={() => handleLockedClick(test.tier)}
+                onClick={() => handleLockedClick(test.abilityLevel ?? "Beginner")}
                 className="flex items-center gap-2 text-xs text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full hover:text-slate-700 hover:bg-slate-200 transition-colors"
               >
                 <Lock size={10} /> {test.title}

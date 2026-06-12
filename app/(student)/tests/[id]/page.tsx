@@ -1,15 +1,33 @@
-import { tests, sampleQuestions } from "@/lib/mock/tests";
+"use client";
+
+import { useParams } from "next/navigation";
 import TestEngine from "@/components/test/TestEngine";
-import { notFound } from "next/navigation";
+import { useQuestionStore } from "@/store/questionStore";
+import { useTestStore } from "@/store/testStore";
+import { abilityAllows, questionMatchesClass } from "@/lib/diagnostic";
+import { useAuthStore } from "@/store/authStore";
 
-export default async function TestPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const test = tests.find((t) => t.id === id) ?? tests[0];
-  if (!test) notFound();
+export default function TestPage() {
+  const { id } = useParams<{ id: string }>();
+  const { tests } = useTestStore();
+  const { questions } = useQuestionStore();
+  const { user } = useAuthStore();
+  const test = tests.find((item) => item.id === id && item.testType !== "diagnostic");
 
-  return <TestEngine test={test} questions={sampleQuestions} />;
-}
+  if (!test) {
+    return (
+      <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center">
+        <p className="text-sm text-slate-500">Test not found.</p>
+      </div>
+    );
+  }
 
-export function generateStaticParams() {
-  return tests.map((t) => ({ id: t.id }));
+  const ability = user?.diagnosticAbilityLevel ?? "Beginner";
+  const testQuestions = questions
+    .filter((question) => (test.questionIds?.length ? test.questionIds.includes(question.id) : question.topicId === test.topicId))
+    .filter((question) => question.status !== "draft")
+    .filter((question) => abilityAllows(ability, question.abilityLevel ?? "Beginner"))
+    .filter((question) => questionMatchesClass(question, user?.classYear));
+
+  return <TestEngine test={test} questions={testQuestions.length ? testQuestions : questions.slice(0, test.questionCount)} />;
 }

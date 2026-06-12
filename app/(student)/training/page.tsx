@@ -1,9 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { Dumbbell, BookOpen, CheckCircle2, Lock, ChevronRight, Clock, Star } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
+import { abilityAllows } from "@/lib/diagnostic";
+import type { AbilityLevel } from "@/types";
 
 const levels = [
   {
     level: "Foundation",
+    abilityLevel: "Beginner" as AbilityLevel,
     subtitle: "For Beginners",
     color: "#059669",
     bg: "bg-emerald-50",
@@ -18,6 +24,7 @@ const levels = [
   },
   {
     level: "Intermediate",
+    abilityLevel: "Advanced" as AbilityLevel,
     subtitle: "Regional Round Prep",
     color: "#d97706",
     bg: "bg-amber-50",
@@ -32,6 +39,7 @@ const levels = [
   },
   {
     level: "Advanced",
+    abilityLevel: "Expert" as AbilityLevel,
     subtitle: "National Round Prep",
     color: "#dc2626",
     bg: "bg-red-50",
@@ -53,9 +61,12 @@ const cardStyle = {
 };
 
 export default function TrainingPage() {
-  const totalModules = levels.flatMap(l => l.modules).length;
-  const completedModules = levels.flatMap(l => l.modules).filter(m => m.completed === m.sessions).length;
-  const inProgressModules = levels.flatMap(l => l.modules).filter(m => m.completed > 0 && m.completed < m.sessions).length;
+  const { user } = useAuthStore();
+  const userAbility = user?.diagnosticAbilityLevel ?? "Beginner";
+  const visibleLevels = levels.filter((level) => abilityAllows(userAbility, level.abilityLevel));
+  const totalModules = visibleLevels.flatMap(l => l.modules).length;
+  const completedModules = visibleLevels.flatMap(l => l.modules).filter(m => m.completed === m.sessions).length;
+  const inProgressModules = visibleLevels.flatMap(l => l.modules).filter(m => m.completed > 0 && m.completed < m.sessions).length;
 
   return (
     <div className="space-y-6">
@@ -80,7 +91,7 @@ export default function TrainingPage() {
       </div>
 
       {/* Levels */}
-      {levels.map(({ level, subtitle, color, bg, border, badge, modules }) => (
+      {visibleLevels.map(({ level, subtitle, color, bg, border, badge, modules }) => (
         <div key={level} className="rounded-2xl p-6" style={cardStyle}>
           {/* Level header */}
           <div className="flex items-center gap-3 mb-5">

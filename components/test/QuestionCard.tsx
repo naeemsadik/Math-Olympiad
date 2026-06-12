@@ -1,7 +1,9 @@
 "use client";
 
+/* eslint-disable @next/next/no-img-element */
 import type { Question } from "@/types";
 import { cn } from "@/lib/utils";
+import { stripMathSyntax } from "@/lib/diagnostic";
 
 interface Props {
   question: Question;
@@ -9,24 +11,40 @@ interface Props {
   onSelect: (idx: number) => void;
 }
 
-const optionLabels = ["A", "B", "C", "D"];
+function optionLabel(index: number) {
+  return index < 26 ? String.fromCharCode(65 + index) : String(index + 1);
+}
 
 export default function QuestionCard({ question, selectedOption, onSelect }: Props) {
+  const prompt = question.prompt ?? { kind: "text" as const, value: question.content };
+  const options =
+    question.answerOptions?.length
+      ? question.answerOptions
+      : question.options.map((option, index) => ({
+          id: `${question.id}-${index}`,
+          media: { kind: "text" as const, value: option },
+          isCorrect: index === question.correctOption,
+        }));
+
   return (
     <div className="bg-white rounded-2xl p-6 flex-1 space-y-6" style={{ border: "1px solid rgba(15,23,42,0.07)", boxShadow: "0 2px 8px rgba(15,23,42,0.05)" }}>
       <div>
         <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-3">
-          Difficulty: {question.difficulty}
+          Level: {question.abilityLevel ?? question.difficulty}
         </p>
-        <p className="text-slate-800 text-base leading-relaxed font-medium">
-          {question.content.replace(/\$/g, "").replace(/\\/g, "")}
-        </p>
+        {prompt.kind === "image" ? (
+          <img src={prompt.value} alt={prompt.alt ?? "Question prompt"} className="max-h-72 w-full rounded-xl object-contain bg-slate-50 border border-slate-200" />
+        ) : (
+          <p className="text-slate-800 text-base leading-relaxed font-medium">
+            {stripMathSyntax(prompt.value)}
+          </p>
+        )}
       </div>
 
       <div className="space-y-3">
-        {question.options.map((opt, idx) => (
+        {options.map((option, idx) => (
           <button
-            key={idx}
+            key={option.id}
             onClick={() => onSelect(idx)}
             className={cn(
               "w-full flex items-center gap-4 p-4 rounded-xl border text-left transition-all",
@@ -43,11 +61,15 @@ export default function QuestionCard({ question, selectedOption, onSelect }: Pro
                   : "bg-slate-200 text-slate-500"
               )}
             >
-              {optionLabels[idx]}
+              {optionLabel(idx)}
             </span>
-            <span className={cn("text-sm", selectedOption === idx ? "text-slate-900 font-semibold" : "text-slate-600")}>
-              {opt.replace(/\$/g, "").replace(/\\/g, "")}
-            </span>
+            {option.media.kind === "image" ? (
+              <img src={option.media.value} alt={option.media.alt ?? `Option ${optionLabel(idx)}`} className="h-24 flex-1 rounded-lg object-contain bg-white border border-slate-100" />
+            ) : (
+              <span className={cn("text-sm", selectedOption === idx ? "text-slate-900 font-semibold" : "text-slate-600")}>
+                {stripMathSyntax(option.media.value)}
+              </span>
+            )}
           </button>
         ))}
       </div>
