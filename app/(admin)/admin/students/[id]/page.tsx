@@ -3,12 +3,14 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useUsersStore } from "@/store/usersStore";
+import { useDiagnosticStore } from "@/store/diagnosticStore";
 import type { AdminUser } from "@/lib/mock/users";
-import type { Tier } from "@/types";
+import type { AbilityLevel, Tier } from "@/types";
 import {
   ArrowLeft, Trophy, Flame, BookOpen, Target,
-  CheckCircle, XCircle, Clock, TrendingUp, BarChart2, Star,
+  CheckCircle, XCircle, Clock, TrendingUp, BarChart2, Star, RotateCcw,
 } from "lucide-react";
+import { abilityColors } from "@/lib/diagnostic";
 
 const tierColors: Record<Tier, string> = {
   Beginner: "#10b981",
@@ -77,7 +79,8 @@ function generateTopicProgress(student: AdminUser) {
 
 export default function StudentDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { users } = useUsersStore();
+  const { users, resetDiagnostic } = useUsersStore();
+  const { attempts, resetUserAttempts } = useDiagnosticStore();
   const student = users.find((u) => u.id === id);
 
   if (!student) {
@@ -95,8 +98,14 @@ export default function StudentDetailPage() {
   const topicProgress = generateTopicProgress(student);
   const tierColor = tierColors[student.tier] ?? "#d97706";
   const levelColor = levelColors[student.level] ?? "#64748b";
+  const diagnosticColor = student.diagnosticAbilityLevel ? abilityColors[student.diagnosticAbilityLevel as AbilityLevel] : "#64748b";
+  const diagnosticAttempt = attempts.find((attempt) => attempt.id === student.diagnosticAttemptId) ?? attempts.find((attempt) => attempt.userId === student.email && attempt.status === "submitted");
   const circum = 2 * Math.PI * 40;
   const passed = results.filter((r) => r.passed).length;
+  const handleResetDiagnostic = () => {
+    resetDiagnostic(student.id);
+    resetUserAttempts(student.email);
+  };
 
   return (
     <div className="space-y-6">
@@ -174,6 +183,36 @@ export default function StudentDetailPage() {
             <p className="font-heading text-2xl font-bold text-slate-900">{value}</p>
           </div>
         ))}
+      </div>
+
+      {/* Diagnostic result */}
+      <div className="glass rounded-2xl p-5 flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <Target size={15} className="text-[#d97706]" />
+            <h2 className="font-heading font-semibold text-slate-900">Diagnostic Placement</h2>
+          </div>
+          {student.diagnosticAbilityLevel ? (
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="font-semibold px-2.5 py-1 rounded-full" style={{ color: diagnosticColor, backgroundColor: `${diagnosticColor}18` }}>
+                {student.diagnosticAbilityLevel}
+              </span>
+              <span className="text-slate-500">Score: {student.diagnosticScore ?? 0}%</span>
+              <span className="text-slate-400">Attempt: {student.diagnosticAttemptId ?? "Recorded"}</span>
+              {student.diagnosticCompletedAt && <span className="text-slate-400">Completed: {new Date(student.diagnosticCompletedAt).toLocaleDateString("en-BD")}</span>}
+            </div>
+          ) : (
+            <p className="text-sm text-slate-500">Diagnostic not completed yet.</p>
+          )}
+          {diagnosticAttempt && (
+            <p className="text-xs text-slate-400 mt-2">
+              {diagnosticAttempt.correctCount ?? 0} correct from {diagnosticAttempt.questionIds.length} questions in {diagnosticAttempt.testTitle}.
+            </p>
+          )}
+        </div>
+        <button onClick={handleResetDiagnostic} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d97706]/10 text-[#d97706] text-sm font-semibold hover:bg-[#d97706]/20 transition-colors">
+          <RotateCcw size={15} /> Force Retake
+        </button>
       </div>
 
       {/* Main grid */}

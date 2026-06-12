@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { User, Tier, InstitutionType } from "@/types";
+import type { AbilityLevel, User, Tier, InstitutionType } from "@/types";
 
 const mockStudent: User = {
   id: "u1",
@@ -49,7 +49,12 @@ interface AuthState {
     institutionType?: InstitutionType,
     classYear?: string,
     whatsapp?: string,
-    dob?: string
+    dob?: string,
+    placementDone?: boolean,
+    diagnosticAbilityLevel?: AbilityLevel,
+    diagnosticScore?: number,
+    diagnosticCompletedAt?: string,
+    diagnosticAttemptId?: string
   ) => void;
   loginAsAdmin: () => void;
   logout: () => void;
@@ -69,7 +74,12 @@ export const useAuthStore = create<AuthState>()(
         institutionType?: InstitutionType,
         classYear?: string,
         whatsapp?: string,
-        dob?: string
+        dob?: string,
+        placementDone?: boolean,
+        diagnosticAbilityLevel?: AbilityLevel,
+        diagnosticScore?: number,
+        diagnosticCompletedAt?: string,
+        diagnosticAttemptId?: string
       ) =>
         set({
           user: {
@@ -82,7 +92,11 @@ export const useAuthStore = create<AuthState>()(
             classYear: classYear ?? "",
             whatsapp: whatsapp ?? "",
             dob: dob ?? "",
-            placementDone: false,
+            placementDone: placementDone ?? false,
+            diagnosticAbilityLevel,
+            diagnosticScore,
+            diagnosticCompletedAt,
+            diagnosticAttemptId,
           },
           isAuthenticated: true,
         }),
@@ -93,7 +107,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "uiu-auth",
-      version: 3,
+      version: 4,
       migrate: (persisted: unknown, version: number) => {
         const state = persisted as Partial<AuthState & { user: Partial<User> | null }>;
         if (version < 2 && state.user) {
@@ -106,6 +120,12 @@ export const useAuthStore = create<AuthState>()(
           state.user.institutionType = state.user.institutionType ?? "University";
           state.user.classYear = state.user.classYear ?? "";
           state.user.whatsapp = state.user.whatsapp ?? "";
+        }
+        if (version < 4 && state.user) {
+          state.user.diagnosticAbilityLevel = state.user.diagnosticAbilityLevel ?? undefined;
+          state.user.diagnosticScore = state.user.diagnosticScore ?? undefined;
+          state.user.diagnosticCompletedAt = state.user.diagnosticCompletedAt ?? undefined;
+          state.user.diagnosticAttemptId = state.user.diagnosticAttemptId ?? undefined;
         }
         return state as AuthState;
       },

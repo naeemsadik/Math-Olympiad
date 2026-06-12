@@ -3,18 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useUsersStore } from "@/store/usersStore";
-import type { Tier } from "@/types";
-import { Search, Trash2, Eye, Users, UserX } from "lucide-react";
-
-const levelColors: Record<string, string> = {
-  Grandmaster: "#f59e0b", "Prime Master": "#d97706", Expert: "#10b981",
-  Advanced: "#3b82f6", Intermediate: "#0891b2", Beginner: "#64748b",
-};
+import { useDiagnosticStore } from "@/store/diagnosticStore";
+import type { AbilityLevel, Tier } from "@/types";
+import { Search, Trash2, Eye, Users, UserX, RotateCcw } from "lucide-react";
+import { abilityColors } from "@/lib/diagnostic";
 const tierColors: Record<Tier, string> = { Beginner: "#10b981", Intermediate: "#f59e0b", Advanced: "#d97706" };
 const tiers: Tier[] = ["Beginner", "Intermediate", "Advanced"];
 
 export default function AdminStudentsPage() {
-  const { users, removeUser } = useUsersStore();
+  const { users, removeUser, resetDiagnostic } = useUsersStore();
+  const { resetUserAttempts } = useDiagnosticStore();
   const [search, setSearch] = useState("");
   const [filterTier, setFilterTier] = useState<Tier | "All">("All");
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -28,6 +26,11 @@ export default function AdminStudentsPage() {
   const doDelete = () => {
     if (deleteId) removeUser(deleteId);
     setDeleteId(null);
+  };
+
+  const doResetDiagnostic = (id: string, email: string) => {
+    resetDiagnostic(id);
+    resetUserAttempts(email);
   };
 
   return (
@@ -85,7 +88,7 @@ export default function AdminStudentsPage() {
                 <th className="text-left py-3 px-6 font-medium hidden md:table-cell">Tier</th>
                 <th className="text-left py-3 px-6 font-medium hidden lg:table-cell">Institute</th>
                 <th className="text-left py-3 px-6 font-medium hidden xl:table-cell">Class / Year</th>
-                <th className="text-left py-3 px-6 font-medium hidden lg:table-cell">Level</th>
+                <th className="text-left py-3 px-6 font-medium hidden lg:table-cell">Diagnostic</th>
                 <th className="text-right py-3 px-6 font-medium hidden sm:table-cell">XP</th>
                 <th className="text-right py-3 px-6 font-medium hidden md:table-cell">Streak</th>
                 <th className="text-right py-3 px-6 font-medium">Score</th>
@@ -111,7 +114,16 @@ export default function AdminStudentsPage() {
                   <td className="py-3.5 px-6 hidden lg:table-cell"><span className="text-xs text-slate-500">{u.institute}</span></td>
                   <td className="py-3.5 px-6 hidden xl:table-cell"><span className="text-xs text-slate-500">{u.classYear ?? <span className="text-slate-300">—</span>}</span></td>
                   <td className="py-3.5 px-6 hidden lg:table-cell">
-                    <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${levelColors[u.level] ?? "#64748b"}18`, color: levelColors[u.level] ?? "#64748b" }}>{u.level}</span>
+                    {u.diagnosticAbilityLevel ? (
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ backgroundColor: `${abilityColors[u.diagnosticAbilityLevel as AbilityLevel]}18`, color: abilityColors[u.diagnosticAbilityLevel as AbilityLevel] }}>
+                          {u.diagnosticAbilityLevel}
+                        </span>
+                        <span className="text-xs text-slate-400">{u.diagnosticScore ?? 0}%</span>
+                      </div>
+                    ) : (
+                      <span className="text-xs text-slate-400">Pending</span>
+                    )}
                   </td>
                   <td className="py-3.5 px-6 text-right hidden sm:table-cell"><span className="text-sm text-[#d97706] font-medium">{u.xp.toLocaleString()}</span></td>
                   <td className="py-3.5 px-6 text-right hidden md:table-cell"><span className="text-sm text-[#f59e0b]">{u.streak}d</span></td>
@@ -122,6 +134,7 @@ export default function AdminStudentsPage() {
                   <td className="py-3.5 px-6">
                     <div className="flex items-center gap-1.5 justify-end">
                       <Link href={`/admin/students/${u.id}`} className="p-1.5 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors"><Eye size={14} /></Link>
+                      <button title="Reset diagnostic" onClick={() => doResetDiagnostic(u.id, u.email)} className="p-1.5 rounded-lg text-slate-400 hover:text-[#d97706] hover:bg-[#d97706]/10 transition-colors"><RotateCcw size={14} /></button>
                       <button onClick={() => setDeleteId(u.id)} className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"><Trash2 size={14} /></button>
                     </div>
                   </td>

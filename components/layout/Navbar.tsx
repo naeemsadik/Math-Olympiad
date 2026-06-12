@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -20,19 +20,19 @@ const navLinks = [
   { label: "Hall of Fame",href: "/hall-of-fame", protected: false },
   { label: "Gallery",     href: "/gallery",      protected: false },
   { label: "Verify",      href: "/verify",       protected: false },
-  { label: "My Dashboard",href: "/dashboard",    protected: true  },
+  { label: "My Dashboard",href: "/student/dashboard", protected: true },
 ];
 
 const studentMobileLinks = [
-  { icon: LayoutDashboard, label: "Dashboard",     href: "/dashboard"   },
-  { icon: Puzzle,          label: "Daily Puzzle",  href: "/daily-puzzle"},
-  { icon: Radio,           label: "Live Exam",     href: "/live-exam"   },
-  { icon: FileText,        label: "Tests",         href: "/tests"       },
-  { icon: Sigma,           label: "Topics",        href: "/topics"      },
-  { icon: Dumbbell,        label: "Training",      href: "/training"    },
-  { icon: Users,           label: "Community",     href: "/community"   },
-  { icon: ClipboardList,   label: "Registration",  href: "/registration"},
-  { icon: Bell,            label: "Announcements", href: "/notices"     },
+  { icon: LayoutDashboard, label: "Dashboard",     href: "/student/dashboard"    },
+  { icon: Puzzle,          label: "Daily Puzzle",  href: "/student/daily-puzzle" },
+  { icon: Radio,           label: "Live Exam",     href: "/student/live-exam"    },
+  { icon: FileText,        label: "Tests",         href: "/student/tests"        },
+  { icon: Sigma,           label: "Topics",        href: "/student/topics"       },
+  { icon: Dumbbell,        label: "Training",      href: "/student/training"     },
+  { icon: Users,           label: "Community",     href: "/student/community"    },
+  { icon: ClipboardList,   label: "Registration",  href: "/student/registration" },
+  { icon: Bell,            label: "Announcements", href: "/student/notices"      },
 ];
 
 const adminMobileLinks = [
@@ -55,11 +55,13 @@ export default function Navbar() {
   const { user, logout } = useAuthStore();
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    (callback) => useAuthStore.persist.onFinishHydration(() => callback()),
+    () => useAuthStore.persist.hasHydrated(),
+    () => true
+  );
   const [scrolled, setScrolled] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -74,9 +76,6 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
-
-  // Close mobile menu on route change
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   const signOut = () => {
     logout();
@@ -217,10 +216,10 @@ export default function Navbar() {
                     <div className="py-1.5">
                       {authUser.role === "STUDENT" ? (
                         <>
-                          <Link href="/dashboard" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
+                          <Link href="/student/dashboard" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
                             <LayoutDashboard size={14} className="text-slate-400" /> My Dashboard
                           </Link>
-                          <Link href="/profile" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
+                          <Link href="/student/profile" onClick={() => setOpen(false)} className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors">
                             <User size={14} className="text-slate-400" /> My Profile
                           </Link>
                         </>
@@ -341,7 +340,7 @@ export default function Navbar() {
                       </div>
                     </div>
                     <Link
-                      href={authUser.role === "ADMIN" ? "/admin/profile" : "/profile"}
+                      href={authUser.role === "ADMIN" ? "/admin/profile" : "/student/profile"}
                       onClick={() => setMobileOpen(false)}
                       className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-50 transition-colors"
                     >

@@ -19,7 +19,7 @@ export default function RecommendedNext({ recommended }: Props) {
         on structural counting.
       </p>
       <Link
-        href="/tests"
+        href="/student/tests"
         className="mt-4 flex items-center gap-2 gradient-orange text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:scale-105 transition-all"
       >
         Begin Assessment <ArrowRight size={14} />

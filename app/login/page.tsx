@@ -37,7 +37,7 @@ const labelCls = "text-xs font-semibold text-slate-500 uppercase tracking-wider"
 
 export default function LoginPage() {
   const router = useRouter();
-  const { loginAsStudent, loginAsAdmin, updateProfile } = useAuthStore();
+  const { loginAsStudent, loginAsAdmin } = useAuthStore();
   const { addUser, users } = useUsersStore();
 
   const [tab, setTab] = useState<Tab>("signin");
@@ -102,9 +102,14 @@ export default function LoginPage() {
       found.institutionType,
       found.classYear,
       found.whatsapp,
+      undefined,
+      found.placementDone ?? false,
+      found.diagnosticAbilityLevel,
+      found.diagnosticScore,
+      found.diagnosticCompletedAt,
+      found.diagnosticAttemptId
     );
-    updateProfile({ placementDone: true });
-    router.push("/dashboard");
+    router.push(found.placementDone ? "/student/dashboard" : "/student/placement");
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -144,6 +149,7 @@ export default function LoginPage() {
       classYear: suClassYear,
       whatsapp: suWhatsapp.trim(),
       password: suPass.trim(),
+      placementDone: false,
     });
 
     loginAsStudent(
@@ -157,7 +163,7 @@ export default function LoginPage() {
       suDob
     );
 
-    router.push("/placement");
+    router.push("/student/placement");
   };
 
   return (

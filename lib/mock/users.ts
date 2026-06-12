@@ -1,4 +1,4 @@
-import type { Tier, InstitutionType } from "@/types";
+import type { AbilityLevel, Tier, InstitutionType } from "@/types";
 
 export interface AdminUser {
   id: string;
@@ -18,6 +18,11 @@ export interface AdminUser {
   classYear?: string;
   whatsapp?: string;
   password?: string;
+  diagnosticAbilityLevel?: AbilityLevel;
+  diagnosticScore?: number;
+  diagnosticCompletedAt?: string;
+  diagnosticAttemptId?: string;
+  placementDone?: boolean;
 }
 
 export const mockUsers: AdminUser[] = [

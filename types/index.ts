@@ -3,8 +3,24 @@ export type Difficulty = "Beginner" | "Intermediate" | "Advanced" | "Elite";
 export type OlympiadType = "BdMO" | "AMC" | "IMO" | "INTERNAL";
 export type QuestionState = "unanswered" | "answered" | "marked" | "skipped";
 export type Tier = "Beginner" | "Intermediate" | "Advanced";
+export type AbilityLevel = "Beginner" | "Advanced" | "Expert";
+export type QuestionFormat = "text-to-text" | "text-to-image" | "image-to-text" | "image-to-image";
+export type QuestionStatus = "draft" | "published";
+export type TestType = "practice" | "diagnostic";
 
 export type InstitutionType = "School" | "College" | "University" | "Graduate";
+
+export interface QuestionMedia {
+  kind: "text" | "image";
+  value: string;
+  alt?: string;
+}
+
+export interface QuestionOption {
+  id: string;
+  media: QuestionMedia;
+  isCorrect: boolean;
+}
 
 export interface User {
   id: string;
@@ -28,6 +44,10 @@ export interface User {
   classYear?: string;
   whatsapp?: string;
   placementDone?: boolean;
+  diagnosticAbilityLevel?: AbilityLevel;
+  diagnosticScore?: number;
+  diagnosticCompletedAt?: string;
+  diagnosticAttemptId?: string;
 }
 
 export interface Topic {
@@ -62,6 +82,19 @@ export interface Question {
   topicId: string;
   difficulty: Difficulty;
   tier: Tier;
+  format?: QuestionFormat;
+  prompt?: QuestionMedia;
+  answerOptions?: QuestionOption[];
+  timeLimitSeconds?: number;
+  targetClassYear?: string;
+  abilityLevel?: AbilityLevel;
+  marks?: number;
+  subtopicTags?: string[];
+  source?: string;
+  status?: QuestionStatus;
+  isDiagnosticEligible?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Test {
@@ -76,6 +109,43 @@ export interface Test {
   isPublic: boolean;
   source?: string;
   tags: string[];
+  testType?: TestType;
+  targetClassYear?: string;
+  abilityLevel?: AbilityLevel;
+  questionIds?: string[];
+  randomQuestionCount?: number;
+  advancedThreshold?: number;
+  expertThreshold?: number;
+}
+
+export interface DiagnosticAttempt {
+  id: string;
+  userId: string;
+  testId: string;
+  testTitle: string;
+  questionIds: string[];
+  answers: Record<string, number>;
+  correctCount?: number;
+  score?: number;
+  abilityLevel?: AbilityLevel;
+  status: "in-progress" | "submitted";
+  startedAt: string;
+  submittedAt?: string;
+}
+
+export interface PracticeAttempt {
+  id: string;
+  userId: string;
+  testId: string;
+  testTitle: string;
+  questionIds: string[];
+  currentIndex: number;
+  answers: Record<string, number>;
+  status: "in-progress" | "submitted";
+  startedAt: string;
+  currentQuestionStartedAt: string;
+  currentQuestionDeadline: string;
+  submittedAt?: string;
 }
 
 export interface TestAttempt {
