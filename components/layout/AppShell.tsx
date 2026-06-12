@@ -8,7 +8,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import { useAuthStore } from "@/store/authStore";
 
 function titleFromPath(pathname: string) {
-  const parts = pathname.split("/").filter(Boolean);
+  const parts = pathname.split("/").filter(Boolean).filter((part) => part !== "student");
   const last = parts[parts.length - 1] ?? "dashboard";
   return last.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 }
@@ -19,7 +19,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuthStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const panelLabel = user?.role === "ADMIN" ? "Admin Panel" : "Student Panel";
-  const profileHref = user?.role === "ADMIN" ? "/admin/profile" : "/profile";
+  const profileHref = user?.role === "ADMIN" ? "/admin/profile" : "/student/profile";
 
   const signOut = () => {
     logout();

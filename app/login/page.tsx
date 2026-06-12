@@ -109,7 +109,7 @@ export default function LoginPage() {
       found.diagnosticCompletedAt,
       found.diagnosticAttemptId
     );
-    router.push(found.placementDone ? "/dashboard" : "/placement");
+    router.push(found.placementDone ? "/student/dashboard" : "/student/placement");
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -163,7 +163,7 @@ export default function LoginPage() {
       suDob
     );
 
-    router.push("/placement");
+    router.push("/student/placement");
   };
 
   return (

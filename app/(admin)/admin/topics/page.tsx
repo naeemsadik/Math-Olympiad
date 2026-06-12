@@ -8,7 +8,7 @@ import type { Topic, Tier } from "@/types";
 type Difficulty = "Beginner" | "Intermediate" | "Advanced" | "Elite";
 const difficulties: Difficulty[] = ["Beginner", "Intermediate", "Advanced", "Elite"];
 const tiers: Tier[] = ["Beginner", "Intermediate", "Advanced"];
-const colorOptions = ["#d97706", "#f59e0b", "#0891b2", "#059669", "#d97706", "#be185d", "#ef4444", "#3b82f6"];
+const colorOptions = ["#d97706", "#f59e0b", "#0891b2", "#059669", "#be185d", "#ef4444", "#3b82f6"];
 const diffColors: Record<string, string> = { Beginner: "#10b981", Intermediate: "#f59e0b", Advanced: "#d97706", Elite: "#ef4444" };
 const tierColors: Record<Tier, string> = { Beginner: "#10b981", Intermediate: "#f59e0b", Advanced: "#d97706" };
 

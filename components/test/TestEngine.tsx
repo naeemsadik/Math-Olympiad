@@ -59,7 +59,7 @@ export default function TestEngine({ test, questions }: Props) {
   const finishAttempt = useCallback(
     (attempt: PracticeAttempt) => {
       submitAttempt(attempt.id, new Date().toISOString());
-      router.push(`/tests/${test.id}/result`);
+      router.push(`/student/tests/${test.id}/result`);
     },
     [router, submitAttempt, test.id]
   );

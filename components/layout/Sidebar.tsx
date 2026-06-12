@@ -21,15 +21,15 @@ import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 
 const studentLinks = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
-  { icon: Puzzle, label: "Daily Puzzle", href: "/daily-puzzle" },
-  { icon: Radio, label: "Live Exam", href: "/live-exam" },
-  { icon: FileText, label: "Tests", href: "/tests" },
-  { icon: Sigma, label: "Topics", href: "/topics" },
-  { icon: Dumbbell, label: "Training", href: "/training" },
-  { icon: Users, label: "Community", href: "/community" },
-  { icon: ClipboardList, label: "Registration", href: "/registration" },
-  { icon: Bell, label: "Announcements", href: "/notices" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/student/dashboard" },
+  { icon: Puzzle, label: "Daily Puzzle", href: "/student/daily-puzzle" },
+  { icon: Radio, label: "Live Exam", href: "/student/live-exam" },
+  { icon: FileText, label: "Tests", href: "/student/tests" },
+  { icon: Sigma, label: "Topics", href: "/student/topics" },
+  { icon: Dumbbell, label: "Training", href: "/student/training" },
+  { icon: Users, label: "Community", href: "/student/community" },
+  { icon: ClipboardList, label: "Registration", href: "/student/registration" },
+  { icon: Bell, label: "Announcements", href: "/student/notices" },
 ];
 
 const adminLinks = [

@@ -76,7 +76,7 @@ function FloatingPuzzleTeaser() {
 
               {/* CTA */}
               <Link
-                href="/daily-puzzle"
+                href="/student/daily-puzzle"
                 className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl text-xs font-bold gradient-orange text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
                 style={{ boxShadow: "0 4px 12px rgba(217,119,6,0.25)" }}
               >
