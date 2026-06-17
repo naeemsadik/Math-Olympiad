@@ -14,13 +14,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleAndPermissionSeeder::class,
             AdminSeeder::class,
-            // Heavy content seeders (uncomment as they're implemented):
-            // TopicModuleLessonSeeder::class,
-            // QuestionAndTestSeeder::class,
-            // MiscContentSeeder::class,
-            // UserSeeder::class,
-            // CmsSeeder::class,
-            // SiteSettingsSeeder::class,
+            UserSeeder::class,
+            TopicModuleLessonSeeder::class,
+            QuestionAndTestSeeder::class,
+            MiscContentSeeder::class,
+            CmsSeeder::class,
+            SiteSettingsSeeder::class,
         ]);
     }
 }
