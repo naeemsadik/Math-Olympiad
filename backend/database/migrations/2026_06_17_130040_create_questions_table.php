@@ -33,7 +33,9 @@ return new class extends Migration
             $table->index(['topic_id', 'status']);
             $table->index(['tier', 'ability_level']);
             $table->index(['target_class_year']);
-            $table->fullText(['content', 'explanation']);
+            if (Schema::getConnection()->getDriverName() !== 'sqlite') {
+                $table->fullText(['content', 'explanation']);
+            }
         });
     }
 

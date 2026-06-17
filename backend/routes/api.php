@@ -66,14 +66,14 @@ Route::get('certificates/verify', [CertificateController::class, 'verify']);
 Route::get('live-exams', [LiveExamController::class, 'index']);
 Route::get('pages/{slug}', [ContentPageController::class, 'show']);
 Route::get('settings', [SiteSettingController::class, 'index']);
+Route::get('topics', [TopicController::class, 'index']);
+Route::get('topics/{slug}', [TopicController::class, 'show']);
 
 // ===== STUDENT (auth required) =====
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('student/dashboard', DashboardController::class);
 
-    // Topics + lessons
-    Route::get('topics', [TopicController::class, 'index']);
-    Route::get('topics/{slug}', [TopicController::class, 'show']);
+    // Lessons (still require auth to track progress)
     Route::post('lessons/{id}/complete', [LessonController::class, 'complete']);
 
     // Tests (gated by placement.done for /start)
