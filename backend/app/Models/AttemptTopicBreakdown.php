@@ -10,6 +10,7 @@ class AttemptTopicBreakdown extends Model
 {
     use HasFactory;
 
+    protected $table = 'attempt_topic_breakdown';
     public $timestamps = false;
     protected $fillable = [
         'test_attempt_id', 'topic_id', 'correct', 'total', 'accuracy',
