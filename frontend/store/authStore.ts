@@ -147,6 +147,20 @@ export const useAuthStore = create<AuthState>()(
         token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),
+      // Re-normalize the persisted user on rehydration so old states (where
+      // the role may have been stored as "Admin" / "admin" rather than "ADMIN")
+      // are coerced into the uppercase enum the UI expects. Without this, an
+      // admin reloading the page would lose role-based routing and be
+      // redirected away from /admin/*.
+      onRehydrateStorage: () => (state) => {
+        if (!state?.user) return;
+        const raw = state.user.role as unknown;
+        let normalised: "STUDENT" | "ADMIN" | "FACULTY" | undefined;
+        if (raw === "ADMIN" || raw === "admin" || raw === "Admin") normalised = "ADMIN";
+        else if (raw === "FACULTY" || raw === "faculty" || raw === "Faculty") normalised = "FACULTY";
+        else if (raw === "STUDENT" || raw === "student" || raw === "Student") normalised = "STUDENT";
+        if (normalised) state.user = { ...state.user, role: normalised };
+      },
     }
   )
 );

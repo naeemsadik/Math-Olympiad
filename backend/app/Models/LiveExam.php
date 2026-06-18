@@ -14,11 +14,15 @@ class LiveExam extends Model
 
     protected $fillable = [
         'title', 'description', 'tier', 'scheduled_at', 'duration',
+        'duration_minutes', 'meeting_url', 'capacity', 'time_limit_seconds',
+        'starts_at', 'ends_at',
         'topic_id', 'test_id', 'question_count', 'status',
     ];
 
     protected $casts = [
         'scheduled_at' => 'datetime',
+        'starts_at' => 'datetime',
+        'ends_at' => 'datetime',
     ];
 
     protected $logAttributes = ['title', 'status', 'scheduled_at', 'tier'];
@@ -37,7 +41,7 @@ class LiveExam extends Model
 
     public function getEndsAtAttribute(): \Illuminate\Support\Carbon
     {
-        return $this->scheduled_at->copy()->addMinutes($this->duration);
+        return $this->scheduled_at->copy()->addMinutes($this->duration_minutes ?? $this->duration);
     }
 
     public function isLiveNow(): bool

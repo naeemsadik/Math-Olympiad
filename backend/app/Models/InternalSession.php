@@ -11,13 +11,18 @@ class InternalSession extends Model
 {
     use HasFactory, HasActivityLog, LogsActivity;
 
-    protected $fillable = ['title', 'subtitle', 'date', 'time', 'type', 'type_color'];
+    protected $fillable = [
+        'title', 'subtitle', 'date', 'time', 'type', 'type_color',
+        'topic', 'speaker', 'scheduled_at', 'duration_minutes',
+        'meeting_url', 'capacity', 'registered_count', 'status', 'description',
+    ];
 
     protected $casts = [
         'date' => 'date',
+        'scheduled_at' => 'datetime',
     ];
 
-    protected $logAttributes = ['title', 'type', 'date'];
+    protected $logAttributes = ['title', 'type', 'date', 'status'];
     protected $logOnlyDirty = true;
     protected $logName = 'internal_session';
 }

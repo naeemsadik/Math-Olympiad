@@ -13,7 +13,7 @@ class UserResource extends JsonResource
             'id' => (string) $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'role' => ucfirst(strtolower($this->role ?? 'student')),
+            'role' => strtoupper($this->role ?? 'student'),
             'tier' => $this->tier,
             'institute' => $this->institute,
             'department' => $this->department,

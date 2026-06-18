@@ -78,7 +78,7 @@ class AdminAuthorizationTest extends TestCase
 
         $response->assertStatus(201)
             ->assertJsonPath('data.email', 'newfaculty@uiu.ac.bd')
-            ->assertJsonPath('data.role', 'Faculty');
+            ->assertJsonPath('data.role', 'FACULTY');
 
         $this->assertDatabaseHas('users', ['email' => 'newfaculty@uiu.ac.bd']);
     }
