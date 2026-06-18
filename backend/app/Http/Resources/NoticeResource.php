@@ -15,6 +15,10 @@ class NoticeResource extends JsonResource
             'body' => $this->body,
             'tier' => $this->tier,
             'priority' => $this->priority,
+            'audience' => $this->audience,
+            'status' => $this->status,
+            'pinned' => (bool) $this->pinned,
+            'expiresAt' => $this->expires_at?->toIso8601String(),
             'author' => $this->author?->name,
             'createdAt' => $this->published_at?->toIso8601String(),
         ];

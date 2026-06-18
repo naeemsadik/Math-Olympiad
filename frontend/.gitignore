@@ -59,6 +59,3 @@ next-env.d.ts
 /backend/storage/framework/providers.php
 /backend/bootstrap/cache/*.php
 !backend/bootstrap/cache/.gitkeep
-
-# puku-cli local state
-/.puku-cli

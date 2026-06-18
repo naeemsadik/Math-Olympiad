@@ -12,7 +12,7 @@ class Notice extends Model
 {
     use HasFactory, HasActivityLog, LogsActivity;
 
-    protected $fillable = ['title', 'body', 'tier', 'priority', 'author_id', 'published_at'];
+    protected $fillable = ['title', 'body', 'tier', 'priority', 'audience', 'status', 'pinned', 'expires_at', 'author_id', 'published_at'];
 
     protected $casts = [
         'published_at' => 'datetime',

@@ -22,8 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'placement.done' => EnsurePlacementDone::class,
         ]);
 
-        // Force JSON for any /api/* response (even on errors)
-        $middleware->statefulApi();
+        // NOTE: We intentionally do NOT call $middleware->statefulApi() here.
+        // The SPA authenticates with Sanctum Bearer tokens; cookie-based session
+        // auth + CSRF for /api/* would block Bearer-only requests from the dev SPA.
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(function (Request $request, \Throwable $e) {

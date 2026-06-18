@@ -25,10 +25,10 @@ class CertificateController extends Controller
         }
         if ($search = $request->query('search')) {
             $query->where(fn ($q) => $q
-                ->where('certificate_id', 'like', "%{$search}%")
-                ->orWhere('recipient_name', 'like', "%{$search}%"));
+                ->where('id', 'like', "%{$search}%")
+                ->orWhere('student_name', 'like', "%{$search}%"));
         }
-        $certificates = $query->orderByDesc('id')->paginate(25);
+        $certificates = $query->orderByDesc('issued_at')->paginate(25);
 
         return response()->json([
             'data' => CertificateResource::collection($certificates->items()),
@@ -43,21 +43,27 @@ class CertificateController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'title' => 'required|string|max:200',
+            'user_id' => 'nullable|exists:users,id',
+            'student_name' => 'required|string|max:160',
+            'student_id_str' => 'nullable|string|max:60',
+            'dept' => 'nullable|string|max:120',
+            'institute' => 'nullable|string|max:190',
+            'achievement' => 'required|string|max:200',
+            'event' => 'nullable|string|max:200',
+            'event_type' => 'nullable|string|max:60',
             'description' => 'nullable|string',
-            'tier' => ['required', Rule::in(['Beginner', 'Intermediate', 'Advanced', 'Elite'])],
-            'score' => 'nullable|numeric|min:0|max:100',
             'issued_at' => 'required|date',
-            'valid_until' => 'nullable|date|after:issued_at',
+            'tier' => ['required', Rule::in(['gold', 'silver', 'bronze'])],
             'signatory_name' => 'nullable|string|max:160',
             'signatory_title' => 'nullable|string|max:160',
         ]);
 
-        $user = User::findOrFail($data['user_id']);
-        $data['recipient_name'] = $user->name;
-        $data['certificate_id'] = $this->generateCertificateId($data['issued_at']);
-        $data['status'] = 'active';
+        if (! empty($data['user_id'])) {
+            $user = User::findOrFail($data['user_id']);
+            $data['student_name'] = $data['student_name'] ?: $user->name;
+        }
+        $data['id'] = $this->generateCertificateId($data['issued_at']);
+        $data['status'] = 'valid';
 
         $certificate = Certificate::create($data);
         return response()->json(['data' => new CertificateResource($certificate)], 201);
@@ -67,11 +73,16 @@ class CertificateController extends Controller
     {
         $certificate = Certificate::findOrFail($id);
         $data = $request->validate([
-            'title' => 'sometimes|string|max:200',
+            'student_name' => 'sometimes|string|max:160',
+            'student_id_str' => 'nullable|string|max:60',
+            'dept' => 'nullable|string|max:120',
+            'institute' => 'nullable|string|max:190',
+            'achievement' => 'sometimes|string|max:200',
+            'event' => 'nullable|string|max:200',
+            'event_type' => 'nullable|string|max:60',
             'description' => 'nullable|string',
-            'tier' => ['sometimes', Rule::in(['Beginner', 'Intermediate', 'Advanced', 'Elite'])],
-            'score' => 'nullable|numeric|min:0|max:100',
-            'valid_until' => 'nullable|date',
+            'issued_at' => 'sometimes|date',
+            'tier' => ['sometimes', Rule::in(['gold', 'silver', 'bronze'])],
             'signatory_name' => 'nullable|string|max:160',
             'signatory_title' => 'nullable|string|max:160',
         ]);
@@ -103,7 +114,7 @@ class CertificateController extends Controller
     {
         $certificate = Certificate::findOrFail($id);
         $certificate->update([
-            'status' => 'active',
+            'status' => 'valid',
             'revoked_at' => null,
             'revoke_reason' => null,
         ]);
@@ -129,18 +140,17 @@ class CertificateController extends Controller
         return response()->stream(function () use ($certificates) {
             $out = fopen('php://output', 'w');
             fputcsv($out, [
-                'Certificate ID', 'Recipient', 'Title', 'Tier', 'Score',
-                'Issued', 'Valid Until', 'Status', 'Revoked At', 'Revoke Reason',
+                'Certificate ID', 'Recipient', 'Achievement', 'Event', 'Tier',
+                'Issued', 'Status', 'Revoked At', 'Revoke Reason',
             ]);
             foreach ($certificates as $c) {
                 fputcsv($out, [
-                    $c->certificate_id,
-                    $c->recipient_name,
-                    $c->title,
+                    $c->id,
+                    $c->student_name,
+                    $c->achievement,
+                    $c->event,
                     $c->tier,
-                    $c->score,
                     $c->issued_at?->toDateString(),
-                    $c->valid_until?->toDateString(),
                     $c->status,
                     $c->revoked_at?->toIso8601String(),
                     $c->revoke_reason,
@@ -153,9 +163,9 @@ class CertificateController extends Controller
     protected function generateCertificateId(string $issuedAt): string
     {
         $year = (int) date('Y', strtotime($issuedAt));
-        $last = Certificate::where('certificate_id', 'like', "UIU-CMOR-{$year}-%")
-            ->orderByDesc('certificate_id')
-            ->value('certificate_id');
+        $last = Certificate::where('id', 'like', "UIU-CMOR-{$year}-%")
+            ->orderByDesc('id')
+            ->value('id');
         $next = 1;
         if ($last && preg_match('/-(\d+)$/', $last, $m)) {
             $next = ((int) $m[1]) + 1;

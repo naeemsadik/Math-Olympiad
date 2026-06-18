@@ -14,11 +14,18 @@ class RegistrationEvent extends Model
 
     protected $fillable = [
         'title', 'type', 'type_color', 'date', 'location',
-        'capacity', 'status', 'description',
+        'venue', 'start_at', 'end_at', 'registration_deadline',
+        'capacity', 'fee', 'currency', 'status', 'description',
+        'requires_approval', 'cover_image', 'category',
     ];
 
     protected $casts = [
         'date' => 'date',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+        'registration_deadline' => 'datetime',
+        'fee' => 'decimal:2',
+        'requires_approval' => 'boolean',
     ];
 
     protected $logAttributes = ['title', 'type', 'status'];

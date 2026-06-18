@@ -20,9 +20,10 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
+        // SPA uses Bearer tokens, so we intentionally do NOT include the Next dev origin here.
+        // If you switch to cookie-based auth (Sanctum SPA mode), add 'localhost:3000,127.0.0.1:3000'.
+        '127.0.0.1,127.0.0.1:8000,::1',
         Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
     ))),
 
     /*

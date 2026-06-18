@@ -56,7 +56,7 @@ class RegistrationController extends Controller
     public function registrationIndex(Request $request, int $eventId): JsonResponse
     {
         $event = RegistrationEvent::findOrFail($eventId);
-        $query = EventRegistration::where('event_id', $event->id);
+        $query = EventRegistration::where('registration_event_id', $event->id);
         if ($status = $request->query('status')) {
             $query->where('status', $status);
         }
@@ -74,7 +74,7 @@ class RegistrationController extends Controller
 
     public function registrationUpdate(Request $request, int $eventId, int $regId): JsonResponse
     {
-        $reg = EventRegistration::where('event_id', $eventId)->findOrFail($regId);
+        $reg = EventRegistration::where('registration_event_id', $eventId)->findOrFail($regId);
         $data = $request->validate([
             'status' => ['required', Rule::in(['pending', 'confirmed', 'waitlist', 'cancelled', 'attended'])],
             'payment_status' => ['nullable', Rule::in(['unpaid', 'paid', 'refunded', 'waived'])],
@@ -86,14 +86,14 @@ class RegistrationController extends Controller
 
     public function registrationDestroy(int $eventId, int $regId): JsonResponse
     {
-        EventRegistration::where('event_id', $eventId)->findOrFail($regId)->delete();
+        EventRegistration::where('registration_event_id', $eventId)->findOrFail($regId)->delete();
         return response()->json(['message' => 'Registration deleted.']);
     }
 
     public function exportCsv(Request $request, int $eventId): StreamedResponse
     {
         $event = RegistrationEvent::findOrFail($eventId);
-        $regs = EventRegistration::where('event_id', $event->id)->get();
+        $regs = EventRegistration::where('registration_event_id', $event->id)->get();
 
         $headers = [
             'Content-Type' => 'text/csv; charset=UTF-8',
@@ -144,7 +144,7 @@ class RegistrationController extends Controller
 
     protected function serializeEvent(RegistrationEvent $e): array
     {
-        $registered = EventRegistration::where('event_id', $e->id)
+        $registered = EventRegistration::where('registration_event_id', $e->id)
             ->whereNotIn('status', ['cancelled'])->count();
         return [
             'id' => (string) $e->id,
@@ -170,7 +170,7 @@ class RegistrationController extends Controller
         $user = User::find($r->user_id);
         return [
             'id' => (string) $r->id,
-            'eventId' => (string) $r->event_id,
+            'eventId' => (string) $r->registration_event_id,
             'user' => $user ? [
                 'id' => (string) $user->id,
                 'name' => $user->name,

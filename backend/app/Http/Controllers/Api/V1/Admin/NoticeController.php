@@ -72,6 +72,7 @@ class NoticeController extends Controller
         return $request->validate([
             'title' => 'required|string|max:200',
             'body' => 'required|string',
+            'tier' => ['required', Rule::in(['All', 'Beginner', 'Intermediate', 'Advanced'])],
             'audience' => ['required', Rule::in(['all', 'students', 'faculty'])],
             'priority' => ['nullable', Rule::in(['low', 'normal', 'high', 'urgent'])],
             'status' => ['required', Rule::in(['draft', 'published', 'archived'])],
