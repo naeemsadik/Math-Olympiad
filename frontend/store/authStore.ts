@@ -152,6 +152,9 @@ export const useAuthStore = create<AuthState>()(
       // are coerced into the uppercase enum the UI expects. Without this, an
       // admin reloading the page would lose role-based routing and be
       // redirected away from /admin/*.
+      //
+      // Note: mutating the `state` parameter alone does NOT update the store —
+      // we have to call `useAuthStore.setState` for the change to stick.
       onRehydrateStorage: () => (state) => {
         if (!state?.user) return;
         const raw = state.user.role as unknown;
@@ -159,7 +162,9 @@ export const useAuthStore = create<AuthState>()(
         if (raw === "ADMIN" || raw === "admin" || raw === "Admin") normalised = "ADMIN";
         else if (raw === "FACULTY" || raw === "faculty" || raw === "Faculty") normalised = "FACULTY";
         else if (raw === "STUDENT" || raw === "student" || raw === "Student") normalised = "STUDENT";
-        if (normalised) state.user = { ...state.user, role: normalised };
+        if (normalised && raw !== normalised) {
+          useAuthStore.setState({ user: { ...state.user, role: normalised } });
+        }
       },
     }
   )
