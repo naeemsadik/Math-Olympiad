@@ -136,6 +136,7 @@ export function normalizeTest(test: Test): Test {
     ...test,
     testType: test.testType ?? "practice",
     targetClassYear: test.targetClassYear ?? ALL_CLASS_YEARS,
+    topicId: test.topicId ?? "mixed",
     abilityLevel,
     questionIds: test.questionIds ?? [],
     randomQuestionCount: test.randomQuestionCount ?? test.questionCount,

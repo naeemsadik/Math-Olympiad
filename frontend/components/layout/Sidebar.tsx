@@ -16,6 +16,7 @@ import {
   Dumbbell,
   ClipboardList,
   Award,
+  LayoutGrid,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
@@ -44,6 +45,7 @@ const adminLinks = [
   { icon: ClipboardList, label: "Registration",  href: "/admin/registration" },
   { icon: Award,         label: "Certificates",  href: "/admin/certificates" },
   { icon: Bell,          label: "Announcements", href: "/admin/notices"      },
+  { icon: LayoutGrid,    label: "Content / CMS", href: "/admin/cms"          },
 ];
 
 interface Props {

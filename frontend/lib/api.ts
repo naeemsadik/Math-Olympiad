@@ -408,8 +408,8 @@ const admin = {
     list: () => get("/admin/home-sections"),
     create: (payload: Record<string, unknown>) => post("/admin/home-sections", payload),
     update: (id: string | number, payload: Record<string, unknown>) => patch(`/admin/home-sections/${id}`, payload),
-    reorder: (order: Array<{ id: string | number; position: number }>) =>
-      post("/admin/home-sections/reorder", { order }),
+    // Backend expects an array of section IDs in the new order (not objects).
+    reorder: (order: Array<string | number>) => post("/admin/home-sections/reorder", { order }),
   },
 
   settings: {

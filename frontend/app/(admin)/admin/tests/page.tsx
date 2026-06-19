@@ -73,6 +73,9 @@ export default function AdminTestsPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [questionSearch, setQuestionSearch] = useState("");
+  const [filterTopic, setFilterTopic] = useState<string>("all");
+  const [filterDifficulty, setFilterDifficulty] = useState<string>("all");
+  const [filterClassYear, setFilterClassYear] = useState<string>("all");
   const [tagInput, setTagInput] = useState("");
   const [validation, setValidation] = useState("");
 
@@ -118,6 +121,12 @@ export default function AdminTestsPage() {
       .filter((question) => !selected.has(String(question.id)))
       .filter((question) => (form.testType !== "diagnostic" || question.isDiagnosticEligible) && question.status !== "draft")
       .filter((question) => {
+        if (filterTopic !== "all" && String(question.topicId ?? "") !== filterTopic) return false;
+        if (filterDifficulty !== "all" && (question.abilityLevel ?? "") !== filterDifficulty) return false;
+        if (filterClassYear !== "all" && (question.targetClassYear ?? "") !== filterClassYear) return false;
+        return true;
+      })
+      .filter((question) => {
         const prompt = question.prompt?.value ?? question.content;
         return (
           prompt.toLowerCase().includes(needle) ||
@@ -126,12 +135,15 @@ export default function AdminTestsPage() {
           (question.abilityLevel ?? "").toLowerCase().includes(needle)
         );
       });
-  }, [form.questionIds, form.testType, questionSearch, questions]);
+  }, [form.questionIds, form.testType, questionSearch, questions, filterTopic, filterDifficulty, filterClassYear]);
 
   const openCreate = () => {
     setForm(blankTest());
     setTagInput("");
     setQuestionSearch("");
+    setFilterTopic("all");
+    setFilterDifficulty("all");
+    setFilterClassYear("all");
     setValidation("");
     setEditId(null);
     setShowForm(true);
@@ -141,6 +153,9 @@ export default function AdminTestsPage() {
     setForm(normalizeTest(test));
     setTagInput("");
     setQuestionSearch("");
+    setFilterTopic("all");
+    setFilterDifficulty("all");
+    setFilterClassYear("all");
     setValidation("");
     setEditId(test.id);
     setShowForm(true);
@@ -332,6 +347,20 @@ export default function AdminTestsPage() {
               <div className="relative">
                 <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input value={questionSearch} onChange={(e) => setQuestionSearch(e.target.value)} placeholder="Search question pool..." className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-sm text-slate-500 placeholder-slate-400 outline-none focus:border-[#d97706]/50" />
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                <select value={filterTopic} onChange={(e) => setFilterTopic(e.target.value)} className="bg-slate-50 border border-slate-200 rounded-xl px-2 py-1.5 text-xs text-slate-700 outline-none focus:border-[#d97706]/50">
+                  <option value="all">All topics</option>
+                  {topicList.map((topic) => <option key={topic} value={topic}>{topic.replace(/-/g, " ")}</option>)}
+                </select>
+                <select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)} className="bg-slate-50 border border-slate-200 rounded-xl px-2 py-1.5 text-xs text-slate-700 outline-none focus:border-[#d97706]/50">
+                  <option value="all">All abilities</option>
+                  {abilityLevels.map((level) => <option key={level} value={level}>{level}</option>)}
+                </select>
+                <select value={filterClassYear} onChange={(e) => setFilterClassYear(e.target.value)} className="bg-slate-50 border border-slate-200 rounded-xl px-2 py-1.5 text-xs text-slate-700 outline-none focus:border-[#d97706]/50">
+                  <option value="all">All classes</option>
+                  {classYearOptions.map((year) => <option key={year} value={year}>{year}</option>)}
+                </select>
               </div>
               <div className="max-h-72 overflow-y-auto space-y-2 pr-1">
                 {availableQuestions.map((question) => (
